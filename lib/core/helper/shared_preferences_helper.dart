@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
   static setInt(String key, int value) async {
-    final pref = await SharedPreferences.getInstance();
+    final pref = await SharedPreferences.getInstance(); 
     pref.setInt(key, value);
   }
 

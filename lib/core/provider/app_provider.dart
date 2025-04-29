@@ -20,11 +20,11 @@ abstract class AppProvider with ChangeNotifier {
   }
 
   void hideLoading() {
-    _isLoading = true;
+    _isLoading = false;
     notifyListeners();
   }
 
-  void ini();
+  void init();
 
   @override
   void dispose() {
