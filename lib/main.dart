@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesnap/app/presentation/intro/splash_page.dart';
 import 'package:timesnap/core/di/dependency.dart';
 import 'package:timesnap/core/widget/error_app_widget.dart';
 import 'package:timesnap/core/widget/loading_app_widget.dart';
@@ -17,14 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: ErrorAppWidget(
-          description: "Error bjir",
-          onPressDefault: () {
-            print("asdsada");
-          },
-        ),
-      ),
+      home: const SplashScreen(),
     );
   }
 }
