@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:timesnap/app/presentation/page/home_page.dart';
+
+import 'package:timesnap/core/helper/global_helper.dart'; 
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,7 +19,14 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    super.dispose();
+    super.dispose();   
+  }
+
+       void _navigateToHomePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Homepage()),
+    );
   }
 
   @override
@@ -27,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF0B3953), // Darker navy blue that matches the image
+          color: Color(0xFF0E3C53), // Darker navy blue that matches the image
         ),
         child: Stack(
           children: [
@@ -65,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
               right: 0,
               bottom: 0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 25),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,42 +82,56 @@ class _LoginPageState extends State<LoginPage> {
                       // Welcome text
                       Text(
                         "Login ",
-                        style: GoogleFonts.poppins(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF0B3953),
-                        ),
+                              style:
+                              GlobalHelper.getTextStyle(  
+                              context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+
+                      )?.copyWith(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color:const Color(0xFF0E3C53),
                       ),
-                      
+
+                      ),
                       const SizedBox(height: 40),
-                      
-                      // Email field
                       Text(
                         "Enter Your Email",
-                        style: GoogleFonts.poppins(
+                        style: GlobalHelper.getTextStyle(  
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+
+                      )?.copyWith(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xFF0B3953),
-                        ),
+                          color: const Color(0xFF0E3C53),
+                      ),
+
                       ),
                       TextField(
                         controller: _emailController,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          color: Colors.black87,
+                          style: GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(
+                            fontSize: 14,
+                            color: Colors.black87,
                         ),
                         decoration: InputDecoration(
                           hintText: "Your email",
-                          hintStyle: GoogleFonts.poppins(
+                          hintStyle: GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(                  
                             fontSize: 14,
                             color: Colors.grey[400],
-                          ),
+                        ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 0),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF0B3953)),
+                            borderSide: BorderSide(color: Color(0xFF0E3C53)),
                           ),
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -119,31 +142,41 @@ class _LoginPageState extends State<LoginPage> {
                       // Password field
                       Text(
                         "Password",
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
+                        style: GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(
+                            fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xFF0B3953),
+                          color: const Color(0xFF0E3C53),
                         ),
+
                       ),
                       TextField(
                         controller: _passwordController,
                         obscureText: _obscurePassword,
-                        style: GoogleFonts.poppins(
+                        style: GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(
                           fontSize: 14,
                           color: Colors.black87,
                         ),
                         decoration: InputDecoration(
                           hintText: "Your password at least 8 character",
-                          hintStyle: GoogleFonts.poppins(
+                          hintStyle:GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(
                             fontSize: 14,
                             color: Colors.grey[400],
-                          ),
+                        ),
                           contentPadding: const EdgeInsets.symmetric(vertical: 0),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.grey),
                           ),
                           focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF0B3953)),
+                            borderSide: BorderSide(color: Color(0xFF0E3C53)),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -172,20 +205,25 @@ class _LoginPageState extends State<LoginPage> {
                             print("Sign Up button pressed");
                             print("Email: ${_emailController.text}");
                             print("Password: ${_passwordController.text}");
+
+                            _navigateToHomePage();
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0B3953),
+                            backgroundColor: const Color(0xFF0E3C53),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                           child: Text(
-                            "Sign Up",
-                            style: GoogleFonts.poppins(
+                            "Sign In",
+                            style:GlobalHelper.getTextStyle(  
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
-                            ),
+                        ),
                           ),
                         ),
                       ),

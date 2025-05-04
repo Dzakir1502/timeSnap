@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -52,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D3446), // Dark blue color like in the image
+      backgroundColor: const Color(0xFF0E3C53), // Dark blue color like in the image
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,
