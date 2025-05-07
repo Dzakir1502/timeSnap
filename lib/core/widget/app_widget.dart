@@ -15,9 +15,9 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
   final P2? param2;
   FilledButton? _alternatifErrorButton;
 
-  set alternatifErrorButton(FilledButton param) {
+  set alternatifErrorButton(FilledButton param)=>
     _alternatifErrorButton = param;
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,11 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
         notifier.snackBarMessage = '';
       }
       checkVariableAfterUi(context);
-    });
+    }
+  );
+
     return Scaffold(
-      appBar: _appBarBuild(context),
+      appBar: appBarBuild(context),
       body:(notifier.isLoading)
               ? LoadingAppWidget()
               : (notifier.errorMessage.isNotEmpty)
@@ -54,12 +56,12 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
                 },
                 alternativeButton: _alternatifErrorButton,
               )
-              : _bodyBuild(context),
+              : bodyBuild(context),
     );
   }
 
-  void checkVariableBeforeUi(BuildContext context);
-  void checkVariableAfterUi(BuildContext context);
-  AppBar? _appBarBuild(BuildContext context) => null;
-  Widget _bodyBuild(BuildContext context);
+  void checkVariableBeforeUi(BuildContext context){}
+  void checkVariableAfterUi(BuildContext context){}
+  AppBar? appBarBuild(BuildContext context) => null;
+  Widget bodyBuild(BuildContext context);
 }

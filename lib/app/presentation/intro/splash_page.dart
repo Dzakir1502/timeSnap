@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     // Navigate to home screen after delay
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
+        MaterialPageRoute(builder: (context) =>  LoginPage()),
       );
     });
   }

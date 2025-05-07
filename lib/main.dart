@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesnap/app/presentation/intro/login_page.dart';
 import 'package:timesnap/app/presentation/intro/splash_page.dart';
 import 'package:timesnap/core/di/dependency.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: LoginPage(),
     );
   }
 }

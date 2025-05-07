@@ -1,240 +1,439 @@
 import 'package:flutter/material.dart';
+import 'package:timesnap/app/presentation/intro/login_notifier.dart';
+import 'package:timesnap/core/helper/global_helper.dart';
+import 'package:timesnap/core/widget/app_widget.dart';
 
-import 'package:timesnap/core/helper/global_helper.dart'; 
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
+class LoginPage extends AppWidget<LoginNotifier, void, void> {
   @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _obscurePassword = true;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();   
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Color(0xFF0E3C53), // Darker navy blue that matches the image
-        ),
-        child: Stack(
-          children: [
-            // Login text at top
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.13,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Image.asset(
-                  'assets/images/Logo.png',
-                  width: 220, // Adjust the width as needed
-                  height: 50, // Adjust the height as needed
-                ),
+  Widget bodyBuild(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color(0xFF0E3C53), // Darker navy blue that matches the image
+      ),
+      child: Stack(
+        children: [
+          // Login text at top
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.13,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Image.asset(
+                'assets/images/Logo.png',
+                width: 220, // Adjust the width as needed
+                height: 50, // Adjust the height as needed
               ),
             ),
-            
-            // Wave-like curved background
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.2,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: CustomPaint(
-                size: Size(MediaQuery.of(context).size.width, 
-                          MediaQuery.of(context).size.height * 0.8),
-                painter: CurvedBackgroundPainter(),
+          ),
+
+          // Wave-like curved background
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.2,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: CustomPaint(
+              size: Size(
+                MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height * 0.8,
               ),
+              painter: CurvedBackgroundPainter(),
             ),
-            
-            // Content inside the white area
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.42,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Welcome text
-                      Text(
-                        "Login ",
-                              style:
-                              GlobalHelper.getTextStyle(  
-                              context,
+          ),
+
+          // Content inside the white area
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.42,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Welcome text
+                    Text(
+                      "Login ",
+                      style: GlobalHelper.getTextStyle(
+                        context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
-
                       )?.copyWith(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
-                        color:const Color(0xFF0E3C53),
+                        color: const Color(0xFF0E3C53),
                       ),
-
-                      ),
-                      const SizedBox(height: 40),
-                      Text(
-                        "Enter Your Email",
-                        style: GlobalHelper.getTextStyle(  
+                    ),
+                    const SizedBox(height: 40),
+                    Text(
+                      "Enter Your Email",
+                      style: GlobalHelper.getTextStyle(
                         context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
-
                       )?.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF0E3C53),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF0E3C53),
                       ),
+                    ),
+                    TextField(
+                      style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(fontSize: 14, color: Colors.black87),
+                      decoration: InputDecoration(
+                        hintText: "Your email",
+                        hintStyle: GlobalHelper.getTextStyle(
+                          context,
+                          appTextStyle: AppTextStyle.BODY_SMALL,
+                        )?.copyWith(fontSize: 14, color: Colors.grey[400]),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF0E3C53)),
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
 
-                      ),
-                      TextField(
-                        controller: _emailController,
-                          style: GlobalHelper.getTextStyle(  
-                          context,
-                          appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(
-                            fontSize: 14,
-                            color: Colors.black87,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "Your email",
-                          hintStyle: GlobalHelper.getTextStyle(  
-                          context,
-                          appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(                  
-                            fontSize: 14,
-                            color: Colors.grey[400],
-                        ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF0E3C53)),
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                      
-                      const SizedBox(height: 24),
-                      
-                      // Password field
-                      Text(
-                        "Password",
-                        style: GlobalHelper.getTextStyle(  
-                          context,
-                          appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(
-                            fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF0E3C53),
-                        ),
+                    const SizedBox(height: 24),
 
+                    // Password field
+                    Text(
+                      "Password",
+                      style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF0E3C53),
                       ),
-                      TextField(
-                        controller: _passwordController,
-                        obscureText: _obscurePassword,
-                        style: GlobalHelper.getTextStyle(  
+                    ),
+                    TextField(
+                      style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(fontSize: 14, color: Colors.black87),
+                      decoration: InputDecoration(
+                        hintText: "Your password at least 8 character",
+                        hintStyle: GlobalHelper.getTextStyle(
                           context,
                           appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(
-                          fontSize: 14,
-                          color: Colors.black87,
+                        )?.copyWith(fontSize: 14, color: Colors.grey[400]),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                        enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
                         ),
-                        decoration: InputDecoration(
-                          hintText: "Your password at least 8 character",
-                          hintStyle:GlobalHelper.getTextStyle(  
-                          context,
-                          appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(
+                        focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF0E3C53)),
+                        ),
+                        // suffixIcon: IconButton(
+                        //   icon: Icon(
+                        //     _obscurePassword
+                        //         ? Icons.visibility_off
+                        //         : Icons.visibility,
+                        //     color: Colors.grey,
+                        //     size: 20,
+                        //   ),
+
+                        // ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 40),
+
+                    // Sign Up button
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      child: FilledButton(
+                        onPressed: _onPressLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0E3C53),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          "Sign In",
+                          style: GlobalHelper.getTextStyle(
+                            context,
+                            appTextStyle: AppTextStyle.BODY_SMALL,
+                          )?.copyWith(
                             fontSize: 14,
-                            color: Colors.grey[400],
-                        ),
-                          contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF0E3C53)),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                              color: Colors.grey,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                      
-                      const SizedBox(height: 40),
-                      
-                      // Sign Up button
-                      Container(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Add sign up logic here
-                            print("Sign Up button pressed");
-                            print("Email: ${_emailController.text}");
-                            print("Password: ${_passwordController.text}");
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0E3C53),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            "Sign In",
-                            style:GlobalHelper.getTextStyle(  
-                          context,
-                          appTextStyle: AppTextStyle.BODY_SMALL,
-                        )?.copyWith(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                        ),
-                          ),
-                        ),
-                      ),
-                      
-                      // Add more space at the bottom to match the image
-                      const SizedBox(height: 80),
-                    ],
-                  ),
+                    ),
+
+                    // Add more space at the bottom to match the image
+                    const SizedBox(height: 80),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+
+  _onPressLogin(){}
 }
 
-// Custom painter to create the wave-like background with 3-4 layers of curves
+
+
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+
+// import 'package:timesnap/core/helper/global_helper.dart'; 
+
+// class LoginPage extends StatefulWidget {
+//   const LoginPage({Key? key}) : super(key: key);
+
+//   @override
+//   _LoginPageState createState() => _LoginPageState();
+// }
+
+// class _LoginPageState extends State<LoginPage> {
+//   final TextEditingController _emailController = TextEditingController();
+//   final TextEditingController _passwordController = TextEditingController();
+//   bool _obscurePassword = true;
+
+//   @override
+//   void dispose() {
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     super.dispose();   
+//   }
+
+
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         width: double.infinity,
+//         height: double.infinity,
+//         decoration: const BoxDecoration(
+//           color: Color(0xFF0E3C53), // Darker navy blue that matches the image
+//         ),
+//         child: Stack(
+//           children: [
+//             // Login text at top
+//             Positioned(
+//               top: MediaQuery.of(context).size.height * 0.13,
+//               left: 0,
+//               right: 0,
+//               child: Center(
+//                 child: Image.asset(
+//                   'assets/images/Logo.png',
+//                   width: 220, // Adjust the width as needed
+//                   height: 50, // Adjust the height as needed
+//                 ),
+//               ),
+//             ),
+            
+//             // Wave-like curved background
+//             Positioned(
+//               top: MediaQuery.of(context).size.height * 0.2,
+//               left: 0,
+//               right: 0,
+//               bottom: 0,
+//               child: CustomPaint(
+//                 size: Size(MediaQuery.of(context).size.width, 
+//                           MediaQuery.of(context).size.height * 0.8),
+//                 painter: CurvedBackgroundPainter(),
+//               ),
+//             ),
+            
+//             // Content inside the white area
+//             Positioned(
+//               top: MediaQuery.of(context).size.height * 0.42,
+//               left: 0,
+//               right: 0,
+//               bottom: 0,
+//               child: Padding(
+//                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+//                 child: SingleChildScrollView(
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       // Welcome text
+//                       Text(
+//                         "Login ",
+//                               style:
+//                               GlobalHelper.getTextStyle(  
+//                               context,
+//                         appTextStyle: AppTextStyle.BODY_SMALL,
+
+//                       )?.copyWith(
+//                         fontSize: 26,
+//                         fontWeight: FontWeight.bold,
+//                         color:const Color(0xFF0E3C53),
+//                       ),
+
+//                       ),
+//                       const SizedBox(height: 40),
+//                       Text(
+//                         "Enter Your Email",
+//                         style: GlobalHelper.getTextStyle(  
+//                         context,
+//                         appTextStyle: AppTextStyle.BODY_SMALL,
+
+//                       )?.copyWith(
+//                           fontSize: 14,
+//                           fontWeight: FontWeight.w500,
+//                           color: const Color(0xFF0E3C53),
+//                       ),
+
+//                       ),
+//                       TextField(
+//                         controller: _emailController,
+//                           style: GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(
+//                             fontSize: 14,
+//                             color: Colors.black87,
+//                         ),
+//                         decoration: InputDecoration(
+//                           hintText: "Your email",
+//                           hintStyle: GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(                  
+//                             fontSize: 14,
+//                             color: Colors.grey[400],
+//                         ),
+//                           contentPadding: const EdgeInsets.symmetric(vertical: 0),
+//                           enabledBorder: const UnderlineInputBorder(
+//                             borderSide: BorderSide(color: Colors.grey),
+//                           ),
+//                           focusedBorder: const UnderlineInputBorder(
+//                             borderSide: BorderSide(color: Color(0xFF0E3C53)),
+//                           ),
+//                         ),
+//                         keyboardType: TextInputType.emailAddress,
+//                       ),
+                      
+//                       const SizedBox(height: 24),
+                      
+//                       // Password field
+//                       Text(
+//                         "Password",
+//                         style: GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(
+//                             fontSize: 14,
+//                           fontWeight: FontWeight.w500,
+//                           color: const Color(0xFF0E3C53),
+//                         ),
+
+//                       ),
+//                       TextField(
+//                         controller: _passwordController,
+//                         obscureText: _obscurePassword,
+//                         style: GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(
+//                           fontSize: 14,
+//                           color: Colors.black87,
+//                         ),
+//                         decoration: InputDecoration(
+//                           hintText: "Your password at least 8 character",
+//                           hintStyle:GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(
+//                             fontSize: 14,
+//                             color: Colors.grey[400],
+//                         ),
+//                           contentPadding: const EdgeInsets.symmetric(vertical: 0),
+//                           enabledBorder: const UnderlineInputBorder(
+//                             borderSide: BorderSide(color: Colors.grey),
+//                           ),
+//                           focusedBorder: const UnderlineInputBorder(
+//                             borderSide: BorderSide(color: Color(0xFF0E3C53)),
+//                           ),
+//                           suffixIcon: IconButton(
+//                             icon: Icon(
+//                               _obscurePassword ? Icons.visibility_off : Icons.visibility,
+//                               color: Colors.grey,
+//                               size: 20,
+//                             ),
+//                             onPressed: () {
+//                               setState(() {
+//                                 _obscurePassword = !_obscurePassword;
+//                               });
+//                             },
+//                           ),
+//                         ),
+//                       ),
+                      
+//                       const SizedBox(height: 40),
+                      
+//                       // Sign Up button
+//                       Container(
+//                         width: double.infinity,
+//                         height: 48,
+//                         child: ElevatedButton(
+//                           onPressed: () {
+//                             // Add sign up logic here
+//                             print("Sign Up button pressed");
+//                             print("Email: ${_emailController.text}");
+//                             print("Password: ${_passwordController.text}");
+//                           },
+//                           style: ElevatedButton.styleFrom(
+//                             backgroundColor: const Color(0xFF0E3C53),
+//                             shape: RoundedRectangleBorder(
+//                               borderRadius: BorderRadius.circular(10),
+//                             ),
+//                           ),
+//                           child: Text(
+//                             "Sign In",
+//                             style:GlobalHelper.getTextStyle(  
+//                           context,
+//                           appTextStyle: AppTextStyle.BODY_SMALL,
+//                         )?.copyWith(
+//                               fontSize: 14,
+//                               fontWeight: FontWeight.w500,
+//                               color: Colors.white,
+//                         ),
+//                           ),
+//                         ),
+//                       ),
+                      
+//                       // Add more space at the bottom to match the image
+//                       const SizedBox(height: 80),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // Custom painter to create the wave-like background with 3-4 layers of curves
 class CurvedBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
