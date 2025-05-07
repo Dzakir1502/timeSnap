@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timesnap/app/presentation/page/home_page.dart';
 
 import 'package:timesnap/core/helper/global_helper.dart'; 
 
@@ -22,12 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();   
   }
 
-       void _navigateToHomePage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Homepage()),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +63,12 @@ class _LoginPageState extends State<LoginPage> {
             
             // Content inside the white area
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.45,
+              top: MediaQuery.of(context).size.height * 0.42,
               left: 0,
               right: 0,
               bottom: 0,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,8 +199,6 @@ class _LoginPageState extends State<LoginPage> {
                             print("Sign Up button pressed");
                             print("Email: ${_emailController.text}");
                             print("Password: ${_passwordController.text}");
-
-                            _navigateToHomePage();
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF0E3C53),
