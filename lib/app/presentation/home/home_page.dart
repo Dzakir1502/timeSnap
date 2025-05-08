@@ -9,7 +9,13 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
   @override
   Widget bodyBuild(BuildContext context) {
     return SafeArea(
-      child: Column(children: [_headerLayout(context), _todayLayout(context)]),
+      child: Column(
+        children: [
+          _headerLayout(context),
+          _todayLayout(context),
+          Expanded(child: _thisMonthLayout(context)),
+        ],
+      ),
     );
   }
 
@@ -92,7 +98,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                     Icon(Icons.today),
                     SizedBox(width: 5),
                     Text(
-                      style: GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.BODY_SMALL),
+                      style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      ),
                       DateTimeHelper.formatDateTime(
                         dateTime: DateTime.now(),
                         format: 'EEE, dd MMM yyyy',
@@ -111,24 +120,122 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 ),
                 child: Text(
                   'WFA',
-                style: GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.LABEL_SMALL),
+                  style: GlobalHelper.getTextStyle(
+                    context,
+                    appTextStyle: AppTextStyle.LABEL_SMALL,
+                  ),
                 ),
               ),
             ],
           ),
           SizedBox(height: 10),
-          Row(children: [
-            _timeTodayLayout(context, 'Datang', '23:00:00'),
-            _timeTodayLayout(context, 'Pulang', '08:00:00')
-            ]),
-            SizedBox(height: 20,),
-            Container(
-              width: double.maxFinite,
-              child: FilledButton(onPressed: (){}, child: Text('Buat Kehadiran'), style:FilledButton.styleFrom(
-                backgroundColor:  GlobalHelper.getColorScheme(context).onPrimary,
-                foregroundColor:  GlobalHelper.getColorScheme(context).primary
-              ),),
-            )
+          Row(
+            children: [
+              _timeTodayLayout(context, 'Datang', '23:00:00'),
+              _timeTodayLayout(context, 'Pulang', '22:00:00'),
+            ],
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: double.maxFinite,
+            child: FilledButton(
+              onPressed: () {},
+              child: Text('Buat Kehadiran'),
+              style: FilledButton.styleFrom(
+                backgroundColor: GlobalHelper.getColorScheme(context).onPrimary,
+                foregroundColor: GlobalHelper.getColorScheme(context).primary,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _thisMonthLayout(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      margin: EdgeInsets.all(20),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        color: GlobalHelper.getColorScheme(context).primaryContainer,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'presensi Terakhir',
+            style: GlobalHelper.getTextStyle(
+              context,
+              appTextStyle: AppTextStyle.TITLE_LARGE,
+            ),
+          ),
+          SizedBox(height: 5),
+          Container(
+            height: 1,
+            color: GlobalHelper.getColorScheme(context).primary,
+          ),
+          SizedBox(height: 2),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text(
+                    'Tgl',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    'Datang',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 2,
+                child: Center(
+                  child: Text(
+                    'Balek',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.TITLE_SMALL,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 2),
+          Container(
+            height: 2,
+            color: GlobalHelper.getColorScheme(context).primary,
+          ),
+          ListView.separated(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            separatorBuilder:
+                (context, index) => Container(
+                  margin: EdgeInsets.symmetric(vertical: 2),
+                  height: 1,
+                  color: GlobalHelper.getColorScheme(context).surface,
+                ),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return _itemThisMonth(context);
+            },
+          ),
         ],
       ),
     );
@@ -148,8 +255,66 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Text(label,
-          style: GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.BODY_SMALL)?.copyWith(color: GlobalHelper.getColorScheme(context).onPrimary),
+          Text(
+            label,
+            style: GlobalHelper.getTextStyle(
+              context,
+              appTextStyle: AppTextStyle.BODY_MEDIUM,
+            )?.copyWith(color: GlobalHelper.getColorScheme(context).onPrimary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _itemThisMonth(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: GlobalHelper.getColorScheme(context).primary,
+              ),
+              child: Text(
+                '03\nJuli',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.LABEL_LARGE,
+                )?.copyWith(
+                  color: GlobalHelper.getColorScheme(context).onPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Text(
+                '05:00:00',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.BODY_MEDIUM
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Text(
+                '12:00:00',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.BODY_MEDIUM
+                ),
+              ),
+            ),
           ),
         ],
       ),
