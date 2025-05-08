@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesnap/app/presentation/home/home_page.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/core/helper/global_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
@@ -153,7 +154,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       width: double.infinity,
                       height: 48,
                       child: FilledButton(
-                        onPressed: _onPressLogin,
+                        onPressed:() => _onPressLogin(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF0E3C53),
                           shape: RoundedRectangleBorder(
@@ -186,20 +187,17 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
     );
   }
 
-  _onPressLogin(){}
+  _onPressLogin(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
+    );
+  }
 }
-
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 
-// import 'package:timesnap/core/helper/global_helper.dart'; 
+// import 'package:timesnap/core/helper/global_helper.dart';
 
 // class LoginPage extends StatefulWidget {
 //   const LoginPage({Key? key}) : super(key: key);
@@ -217,10 +215,8 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //   void dispose() {
 //     _emailController.dispose();
 //     _passwordController.dispose();
-//     super.dispose();   
+//     super.dispose();
 //   }
-
-
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -246,7 +242,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                 ),
 //               ),
 //             ),
-            
+
 //             // Wave-like curved background
 //             Positioned(
 //               top: MediaQuery.of(context).size.height * 0.2,
@@ -254,12 +250,12 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //               right: 0,
 //               bottom: 0,
 //               child: CustomPaint(
-//                 size: Size(MediaQuery.of(context).size.width, 
+//                 size: Size(MediaQuery.of(context).size.width,
 //                           MediaQuery.of(context).size.height * 0.8),
 //                 painter: CurvedBackgroundPainter(),
 //               ),
 //             ),
-            
+
 //             // Content inside the white area
 //             Positioned(
 //               top: MediaQuery.of(context).size.height * 0.42,
@@ -276,7 +272,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                       Text(
 //                         "Login ",
 //                               style:
-//                               GlobalHelper.getTextStyle(  
+//                               GlobalHelper.getTextStyle(
 //                               context,
 //                         appTextStyle: AppTextStyle.BODY_SMALL,
 
@@ -290,7 +286,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                       const SizedBox(height: 40),
 //                       Text(
 //                         "Enter Your Email",
-//                         style: GlobalHelper.getTextStyle(  
+//                         style: GlobalHelper.getTextStyle(
 //                         context,
 //                         appTextStyle: AppTextStyle.BODY_SMALL,
 
@@ -303,7 +299,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                       ),
 //                       TextField(
 //                         controller: _emailController,
-//                           style: GlobalHelper.getTextStyle(  
+//                           style: GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
 //                         )?.copyWith(
@@ -312,10 +308,10 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                         ),
 //                         decoration: InputDecoration(
 //                           hintText: "Your email",
-//                           hintStyle: GlobalHelper.getTextStyle(  
+//                           hintStyle: GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
-//                         )?.copyWith(                  
+//                         )?.copyWith(
 //                             fontSize: 14,
 //                             color: Colors.grey[400],
 //                         ),
@@ -329,13 +325,13 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                         ),
 //                         keyboardType: TextInputType.emailAddress,
 //                       ),
-                      
+
 //                       const SizedBox(height: 24),
-                      
+
 //                       // Password field
 //                       Text(
 //                         "Password",
-//                         style: GlobalHelper.getTextStyle(  
+//                         style: GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
 //                         )?.copyWith(
@@ -348,7 +344,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                       TextField(
 //                         controller: _passwordController,
 //                         obscureText: _obscurePassword,
-//                         style: GlobalHelper.getTextStyle(  
+//                         style: GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
 //                         )?.copyWith(
@@ -357,7 +353,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                         ),
 //                         decoration: InputDecoration(
 //                           hintText: "Your password at least 8 character",
-//                           hintStyle:GlobalHelper.getTextStyle(  
+//                           hintStyle:GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
 //                         )?.copyWith(
@@ -385,9 +381,9 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                           ),
 //                         ),
 //                       ),
-                      
+
 //                       const SizedBox(height: 40),
-                      
+
 //                       // Sign Up button
 //                       Container(
 //                         width: double.infinity,
@@ -407,7 +403,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                           ),
 //                           child: Text(
 //                             "Sign In",
-//                             style:GlobalHelper.getTextStyle(  
+//                             style:GlobalHelper.getTextStyle(
 //                           context,
 //                           appTextStyle: AppTextStyle.BODY_SMALL,
 //                         )?.copyWith(
@@ -418,7 +414,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //                           ),
 //                         ),
 //                       ),
-                      
+
 //                       // Add more space at the bottom to match the image
 //                       const SizedBox(height: 80),
 //                     ],
@@ -438,22 +434,38 @@ class CurvedBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Multi-layer curved background with different shades of blue
-    _drawCurve(canvas, size, const Color.fromARGB(255, 28, 79, 109), 0.0); // Darker blue layer
-    _drawCurve(canvas, size, const Color.fromARGB(255, 71, 135, 167), 0.03); // Medium blue layer  
-    _drawCurve(canvas, size, const Color.fromARGB(255, 203, 221, 230), 0.06); // Lighter blue layer
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 28, 79, 109),
+      0.0,
+    ); // Darker blue layer
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 71, 135, 167),
+      0.03,
+    ); // Medium blue layer
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 203, 221, 230),
+      0.06,
+    ); // Lighter blue layer
     _drawCurve(canvas, size, Colors.white, 0.09); // White base layer
   }
-  
+
   void _drawCurve(Canvas canvas, Size size, Color color, double offset) {
-    final paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
-    
+    final paint =
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.fill;
+
     final path = Path();
-    
+
     // Starting point
     path.moveTo(0, size.height * (0.18 + offset));
-    
+
     // Create the curved top
     path.quadraticBezierTo(
       size.width * 0.5, // Control point x
@@ -461,15 +473,15 @@ class CurvedBackgroundPainter extends CustomPainter {
       size.width, // End point x
       size.height * (0.18 + offset), // End point y
     );
-    
+
     // Complete the shape
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
-    
+
     canvas.drawPath(path, paint);
   }
-  
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

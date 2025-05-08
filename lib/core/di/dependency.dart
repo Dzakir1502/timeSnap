@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/core/network/app_interceptor.dart';
 
@@ -20,4 +21,5 @@ Future<void> initDependency() async {
   sl.registerSingleton<Dio>(dio);
 
   sl.registerFactoryParam<LoginNotifier, void, void>((param1, param2) => LoginNotifier(),);
+  sl.registerFactoryParam<HomeNotifier, void, void>((param1, param2) => HomeNotifier(),);
 }
