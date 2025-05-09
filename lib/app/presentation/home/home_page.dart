@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
+import 'package:timesnap/app/presentation/map/map_page.dart';
 import 'package:timesnap/core/helper/date_time_helper.dart';
 import 'package:timesnap/core/helper/global_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
@@ -139,7 +140,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
           Container(
             width: double.maxFinite,
             child: FilledButton(
-              onPressed: () {},
+              onPressed: () => _onPressCreateAttendance(context),
               child: Text('Buat Kehadiran'),
               style: FilledButton.styleFrom(
                 backgroundColor: GlobalHelper.getColorScheme(context).onPrimary,
@@ -299,7 +300,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 '05:00:00',
                 style: GlobalHelper.getTextStyle(
                   context,
-                  appTextStyle: AppTextStyle.BODY_MEDIUM
+                  appTextStyle: AppTextStyle.BODY_MEDIUM,
                 ),
               ),
             ),
@@ -311,7 +312,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 '12:00:00',
                 style: GlobalHelper.getTextStyle(
                   context,
-                  appTextStyle: AppTextStyle.BODY_MEDIUM
+                  appTextStyle: AppTextStyle.BODY_MEDIUM,
                 ),
               ),
             ),
@@ -319,5 +320,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
         ],
       ),
     );
+  }
+
+  _onPressCreateAttendance(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage()
+    ));
   }
 }
