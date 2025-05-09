@@ -51,7 +51,13 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                         children: [
                           Icon(Icons.location_city),
                           SizedBox(width: 5),
-                          Text('Office'),
+                          Text(
+                            'Office',
+                            style: GlobalHelper.getTextStyle(
+                              context,
+                              appTextStyle: AppTextStyle.BODY_MEDIUM,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -59,7 +65,14 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                       child: Row(
                         children: [
                           Icon(Icons.access_time),
-                          Text('Siang'),
+                          SizedBox(width: 5),
+                          Text(
+                            'Siang',
+                            style: GlobalHelper.getTextStyle(
+                              context,
+                              appTextStyle: AppTextStyle.BODY_MEDIUM,
+                            ),
+                          ),
                           SizedBox(width: 5),
                         ],
                       ),
@@ -141,7 +154,13 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             width: double.maxFinite,
             child: FilledButton(
               onPressed: () => _onPressCreateAttendance(context),
-              child: Text('Buat Kehadiran'),
+              child: Text(
+                'Buat Kehadiran',
+                style: GlobalHelper.getTextStyle(
+                  context,
+                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                ),
+              ),
               style: FilledButton.styleFrom(
                 backgroundColor: GlobalHelper.getColorScheme(context).onPrimary,
                 foregroundColor: GlobalHelper.getColorScheme(context).primary,
@@ -166,7 +185,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'presensi Terakhir',
+            'Last Month Attendance',
             style: GlobalHelper.getTextStyle(
               context,
               appTextStyle: AppTextStyle.TITLE_LARGE,
@@ -323,7 +342,6 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
   }
 
   _onPressCreateAttendance(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage()
-    ));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage()));
   }
 }

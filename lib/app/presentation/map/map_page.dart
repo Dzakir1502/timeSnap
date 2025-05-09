@@ -9,7 +9,11 @@ import 'package:timesnap/core/widget/loading_app_widget.dart';
 class MapPage extends AppWidget<MapNotifier, void, void> {
   @override
   AppBar? appBarBuild(BuildContext context) {
-    return AppBar(title: Text("Membuat Kehadiran"));
+    return AppBar(title: Text("Make Attendance",
+     style: GlobalHelper.getTextStyle(
+                              context,
+                              appTextStyle: AppTextStyle.TITLE_LARGE,
+                            ),));
   }
 
   @override
