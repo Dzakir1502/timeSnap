@@ -4,4 +4,5 @@ import 'package:timesnap/core/network/data_state.dart';
 abstract class AttendanceRepository {
   Future<DataState<AttendanceEntity?>> getToday();
   Future<DataState<List<AttendanceEntity>>> getThisMonth();
+  Future<DataState> sendAttendance(AttendanceParamEntity param);
 }
