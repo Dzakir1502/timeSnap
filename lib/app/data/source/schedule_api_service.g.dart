@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attendance_api_service.dart';
+part of 'schedule_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'attendance_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _AttendanceApiService implements AttendanceApiService {
-  _AttendanceApiService(
+class _ScheduleApiService implements ScheduleApiService {
+  _ScheduleApiService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,7 +24,7 @@ class _AttendanceApiService implements AttendanceApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<DataState<dynamic>>> getAttendanceToday() async {
+  Future<HttpResponse<DataState<dynamic>>> get() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -36,43 +36,7 @@ class _AttendanceApiService implements AttendanceApiService {
     )
         .compose(
           _dio.options,
-          '/api/get-attendance-today',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DataState<dynamic> _value;
-    try {
-      _value = DataState<dynamic>.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    final httpResponse = HttpResponse(_value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<DataState<dynamic>>> sendAttendance(
-      {required Map<String, dynamic> body}) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _options = _setStreamType<HttpResponse<DataState<dynamic>>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/api/store-attendance',
+          '/api/get-schedule',
           queryParameters: queryParameters,
           data: _data,
         )

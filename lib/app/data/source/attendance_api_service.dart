@@ -13,4 +13,8 @@ abstract class AttendanceApiService {
   }
   @GET('/api/get-attendance-today')
   Future<HttpResponse<DataState>> getAttendanceToday();
+
+  @POST('/api/store-attendance')
+  Future<HttpResponse<DataState>> sendAttendance(
+    {@Body() required Map<String, dynamic> body});
 }
