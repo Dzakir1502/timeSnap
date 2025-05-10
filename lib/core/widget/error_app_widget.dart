@@ -4,11 +4,11 @@ import 'package:timesnap/core/helper/global_helper.dart';
 class ErrorAppWidget extends StatelessWidget {
   final String description;
   final FilledButton? alternativeButton;
-  final void Function() onPressDefault;
+  final void Function() onPressDefaultButton;
   const ErrorAppWidget({
     super.key,
     required this.description,
-    required this.onPressDefault,
+    required this.onPressDefaultButton,
     this.alternativeButton,
   });
 
@@ -31,7 +31,7 @@ class ErrorAppWidget extends StatelessWidget {
           SizedBox(height: 30.0),
           alternativeButton ??
               FilledButton.icon(
-                onPressed: onPressDefault,
+                onPressed: onPressDefaultButton,
                 icon: Icon(Icons.refresh),
                 label: Text("Refresh"),
               ),

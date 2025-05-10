@@ -29,9 +29,9 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
 
   Widget _build(BuildContext context) {
     notifier = Provider.of<T>(context);
-    checkVariableBeforeUi(context);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    checkVariableBeforeUi(context);
       if (notifier.snackBarMessage.isNotEmpty) {
         DialogHelper.showSnackBar(
           context: context,
@@ -50,7 +50,7 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
               : (notifier.errorMessage.isNotEmpty)
               ? ErrorAppWidget(
                 description: notifier.errorMessage,
-                onPressDefault: () {
+                onPressDefaultButton: () {
                   notifier.init();
                   notifier.errorMessage = '';
                 },
@@ -60,8 +60,8 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
     );
   }
 
-  void checkVariableBeforeUi(BuildContext context){}
-  void checkVariableAfterUi(BuildContext context){}
+  void checkVariableBeforeUi(BuildContext context) {}
+  void checkVariableAfterUi(BuildContext context) {}
   AppBar? appBarBuild(BuildContext context) => null;
   Widget bodyBuild(BuildContext context);
 }

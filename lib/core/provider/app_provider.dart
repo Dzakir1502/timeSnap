@@ -14,7 +14,7 @@ abstract class AppProvider with ChangeNotifier {
   set errorMessage(String param) => _errorMessage = param;
   set snackBarMessage(String param) => _snackBarMessage = param;
 
-  void setLoading() {
+  void showLoading() {
     _isLoading = true;
     notifyListeners();
   }

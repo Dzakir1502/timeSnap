@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:timesnap/app/presentation/home/home_page.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/core/helper/global_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
 
 class LoginPage extends AppWidget<LoginNotifier, void, void> {
+  @override
+  void checkVariableBeforeUi(BuildContext context) {
+    if (notifier.isLoged) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    }
+  }
+
+
   @override
   Widget bodyBuild(BuildContext context) {
     return Container(
@@ -81,6 +90,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       ),
                     ),
                     TextField(
+                      controller: notifier.emailController,
                       style: GlobalHelper.getTextStyle(
                         context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
@@ -117,6 +127,8 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       ),
                     ),
                     TextField(
+                      controller: notifier.passwordController,
+                      obscureText: !notifier.isShowPassword,
                       style: GlobalHelper.getTextStyle(
                         context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
@@ -134,16 +146,14 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                         focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF0E3C53)),
                         ),
-                        // suffixIcon: IconButton(
-                        //   icon: Icon(
-                        //     _obscurePassword
-                        //         ? Icons.visibility_off
-                        //         : Icons.visibility,
-                        //     color: Colors.grey,
-                        //     size: 20,
-                        //   ),
-
-                        // ),
+                        suffixIcon: IconButton(
+                          onPressed: _showHidePassword,
+                          icon: Icon(
+                            (notifier.isShowPassword)
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                        ),
                       ),
                     ),
 
@@ -154,7 +164,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       width: double.infinity,
                       height: 48,
                       child: FilledButton(
-                        onPressed:() => _onPressLogin(context),
+                        onPressed: () => _onPressLogin(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF0E3C53),
                           shape: RoundedRectangleBorder(
@@ -187,12 +197,70 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
     );
   }
 
-  _onPressLogin(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
+  _showHidePassword() {
+    notifier.isShowPassword = !notifier.isShowPassword;
   }
+
+  _onPressLogin(BuildContext context) {
+    notifier.login();
+  }
+}
+
+// // Custom painter to create the wave-like background with 3-4 layers of curves
+class CurvedBackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Multi-layer curved background with different shades of blue
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 28, 79, 109),
+      0.0,
+    ); // Darker blue layer
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 71, 135, 167),
+      0.03,
+    ); // Medium blue layer
+    _drawCurve(
+      canvas,
+      size,
+      const Color.fromARGB(255, 203, 221, 230),
+      0.06,
+    ); // Lighter blue layer
+    _drawCurve(canvas, size, Colors.white, 0.09); // White base layer
+  }
+
+  void _drawCurve(Canvas canvas, Size size, Color color, double offset) {
+    final paint =
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.fill;
+
+    final path = Path();
+
+    // Starting point
+    path.moveTo(0, size.height * (0.18 + offset));
+
+    // Create the curved top
+    path.quadraticBezierTo(
+      size.width * 0.5, // Control point x
+      size.height * (0.0 + offset), // Control point y - this creates the curve
+      size.width, // End point x
+      size.height * (0.18 + offset), // End point y
+    );
+
+    // Complete the shape
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 // import 'package:flutter/material.dart';
@@ -427,61 +495,4 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
 //       ),
 //     );
 //   }
-// }
-
-// // Custom painter to create the wave-like background with 3-4 layers of curves
-class CurvedBackgroundPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Multi-layer curved background with different shades of blue
-    _drawCurve(
-      canvas,
-      size,
-      const Color.fromARGB(255, 28, 79, 109),
-      0.0,
-    ); // Darker blue layer
-    _drawCurve(
-      canvas,
-      size,
-      const Color.fromARGB(255, 71, 135, 167),
-      0.03,
-    ); // Medium blue layer
-    _drawCurve(
-      canvas,
-      size,
-      const Color.fromARGB(255, 203, 221, 230),
-      0.06,
-    ); // Lighter blue layer
-    _drawCurve(canvas, size, Colors.white, 0.09); // White base layer
-  }
-
-  void _drawCurve(Canvas canvas, Size size, Color color, double offset) {
-    final paint =
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.fill;
-
-    final path = Path();
-
-    // Starting point
-    path.moveTo(0, size.height * (0.18 + offset));
-
-    // Create the curved top
-    path.quadraticBezierTo(
-      size.width * 0.5, // Control point x
-      size.height * (0.0 + offset), // Control point y - this creates the curve
-      size.width, // End point x
-      size.height * (0.18 + offset), // End point y
-    );
-
-    // Complete the shape
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
+// }  

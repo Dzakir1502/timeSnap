@@ -227,7 +227,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 flex: 2,
                 child: Center(
                   child: Text(
-                    'Balek',
+                    'Pulang',
                     style: GlobalHelper.getTextStyle(
                       context,
                       appTextStyle: AppTextStyle.TITLE_SMALL,
@@ -251,7 +251,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   height: 1,
                   color: GlobalHelper.getColorScheme(context).surface,
                 ),
-            itemCount: 5,
+            itemCount: 2,
             itemBuilder: (context, index) {
               return _itemThisMonth(context);
             },
