@@ -58,7 +58,7 @@ T Function(dynamic) mapDataSuccess) async{
       return ErrorState(message: '${e.response?.statusCode ?? HttpStatus.badRequest} ${e.error ?? e}');
     }
   } catch (e){
-   return ErrorState(message: e.toString());
+  return ErrorState(message: e.toString());
   }
 
 }
