@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:timesnap/app/module/entity/attendance.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/map/map_page.dart';
 import 'package:timesnap/core/helper/date_time_helper.dart';
@@ -145,8 +146,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
           SizedBox(height: 10),
           Row(
             children: [
-              _timeTodayLayout(context, 'Datang', '23:00:00'),
-              _timeTodayLayout(context, 'Pulang', '22:00:00'),
+              _timeTodayLayout(context, 'Datang',
+                notifier.attendanceToday?.startTime ?? '-'),
+              _timeTodayLayout(context, 'Pulang',
+                notifier.attendanceToday?.endTime ?? '-'),
             ],
           ),
           SizedBox(height: 20),
@@ -251,9 +254,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   height: 1,
                   color: GlobalHelper.getColorScheme(context).surface,
                 ),
-            itemCount: 2,
+            itemCount: notifier.listAttendanceThisMonth.length,
             itemBuilder: (context, index) {
-              return _itemThisMonth(context);
+              final item = notifier.listAttendanceThisMonth[notifier.listAttendanceThisMonth.length - index - 1];
+              return _itemThisMonth(context, item);
             },
           ),
         ],
@@ -287,7 +291,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
     );
   }
 
-  _itemThisMonth(BuildContext context) {
+  _itemThisMonth(BuildContext context, AttendanceEntity item) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 3),
       child: Row(
@@ -301,7 +305,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 color: GlobalHelper.getColorScheme(context).primary,
               ),
               child: Text(
-                '03\nJuli',
+                DateTimeHelper.formatDateTimeFromString(dateTimeString: item.date!, format: 'dd\nMMM'),
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.LABEL_LARGE,
@@ -316,7 +320,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             flex: 2,
             child: Center(
               child: Text(
-                '05:00:00',
+                item.startTime,
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -328,7 +332,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             flex: 2,
             child: Center(
               child: Text(
-                '12:00:00',
+                item.endTime,
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.BODY_MEDIUM,
