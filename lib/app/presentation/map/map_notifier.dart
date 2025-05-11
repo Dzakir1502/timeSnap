@@ -7,6 +7,7 @@ import 'package:timesnap/app/module/entity/attendance.dart';
 import 'package:timesnap/app/module/entity/schedule.dart';
 import 'package:timesnap/app/module/use_case/attendance_send.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
+import 'package:timesnap/core/helper/date_time_helper.dart';
 import 'package:timesnap/core/helper/location_helper.dart';
 import 'package:timesnap/core/provider/app_provider.dart';
 
@@ -42,8 +43,26 @@ class MapNotifier extends AppProvider {
 
   @override
   void init() async {
-    await _getSchedule();
     await _getEnableAndPermission();
+    await _getSchedule();
+    if(errorMessage.isEmpty) await _checkSchedule();
+  }
+
+  _checkSchedule() {
+    final now = DateTime.now();
+    final startTimeShift = _schedule.shift.startTime.split(":");
+    final dateTimeShift = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      int.parse(startTimeShift[0]),
+      int.parse(startTimeShift[1]),
+      int.parse(startTimeShift[2]),
+    );
+    if (DateTimeHelper.getDifference(a: dateTimeShift, b: now) >
+        Duration(minutes: 30)) {
+      errorMessage = 'Attendance Can be made at the earliest 30 minutes before the shift starts';
+    }
   }
 
   _getEnableAndPermission() async {

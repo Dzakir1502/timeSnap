@@ -7,6 +7,8 @@ import 'package:timesnap/app/module/entity/schedule.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_this_month.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_today.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
+import 'package:timesnap/core/constant/constant.dart';
+import 'package:timesnap/core/helper/shared_preferences_helper.dart';
 import 'package:timesnap/core/provider/app_provider.dart';
 
 class HomeNotifier extends AppProvider {
@@ -21,7 +23,8 @@ class HomeNotifier extends AppProvider {
   ) {
     init();
   }
-
+ 
+  String _name = '';
   bool _isPhysicDevice = false;
 
   AttendanceEntity? _attendanceToday;
@@ -34,13 +37,22 @@ class HomeNotifier extends AppProvider {
 
   ScheduleEntity get schedule => _schedule;
   bool get isPhysicDevice => _isPhysicDevice;
+  
+  String  get name => _name;
 
   @override
   void init() async {
+    await _getUserDetail();
     await _getDeviceInfo();
     if (errorMessage.isEmpty) await _getAttendanceToday();
     if (errorMessage.isEmpty) await _getAttendanceThisMonth();
     if (errorMessage.isEmpty) await _getSchedule();
+  }
+
+  _getUserDetail() async{
+    showLoading();
+    _name = await SharedPreferencesHelper.getString(PREF_NAME);
+    hideLoading();
   }
 
   _getDeviceInfo() async {
@@ -53,7 +65,8 @@ class HomeNotifier extends AppProvider {
       _isPhysicDevice = iOSInfo.isPhysicalDevice;
     }
 
-    if (!_isPhysicDevice) errorMessage = 'Anda Harus Memakai Perangkat Android/IOS';
+    if (!_isPhysicDevice)
+      errorMessage = 'Anda Harus Memakai Perangkat Android/IOS';
     hideLoading();
   }
 

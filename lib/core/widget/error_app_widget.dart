@@ -21,11 +21,15 @@ class ErrorAppWidget extends StatelessWidget {
         children: [
           Icon(Icons.error, size: 100, color: Colors.red),
           SizedBox(height: 20.0),
-          Text(
-            description,
-            style: GlobalHelper.getTextStyle(
-              context,
-              appTextStyle: AppTextStyle.HEADLINE_SMALL,
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Text(
+              textAlign: TextAlign.center,
+              description,
+              style: GlobalHelper.getTextStyle(
+                context,
+                appTextStyle: AppTextStyle.HEADLINE_SMALL,
+              ),
             ),
           ),
           SizedBox(height: 30.0),
@@ -33,7 +37,14 @@ class ErrorAppWidget extends StatelessWidget {
               FilledButton.icon(
                 onPressed: onPressDefaultButton,
                 icon: Icon(Icons.refresh),
-                label: Text("Refresh"),
+                label: Text("Refresh",
+                style:  GlobalHelper.getTextStyle(
+                 context,
+              appTextStyle: AppTextStyle.BODY_LARGE,
+            )?.copyWith(
+              color: Colors.white
+            ),
+            ),
               ),
         ],
       ),

@@ -29,12 +29,14 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
   @override
   Widget bodyBuild(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          _headerLayout(context),
-          _todayLayout(context),
-          Expanded(child: _thisMonthLayout(context)),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            _headerLayout(context),
+            _todayLayout(context),
+            _thisMonthLayout(context),
+          ],
+        ),
       ),
     );
   }
@@ -56,7 +58,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Nama Pegawai',
+                  notifier.name,
                   style: GlobalHelper.getTextStyle(
                     context,
                     appTextStyle: AppTextStyle.HEADLINE_SMALL,
@@ -207,6 +209,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       width: double.maxFinite,
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(20),
+      constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height - kToolbarHeight),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         color: GlobalHelper.getColorScheme(context).primaryContainer,
