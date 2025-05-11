@@ -24,17 +24,21 @@ class DetailAttendancePage
               Expanded(child: DropdownMenu(
                 expandedInsets: EdgeInsets.symmetric(horizontal: 1),
                 label: Text('Month'),
-                dropdownMenuEntries: []
+                dropdownMenuEntries: notifier.monthListDropdown,
+                initialSelection: 1,
+                controller: notifier.monthController,
               )),
               Expanded(child: DropdownMenu(
                 expandedInsets: EdgeInsets.symmetric(horizontal: 1),
                 label: Text('Year'),
-                dropdownMenuEntries: []
+                dropdownMenuEntries: notifier.yearListDropdown,
+                initialSelection: 2025,
+                controller: notifier.yearController,
               )),
               IconButton(onPressed: _onPressSearch, icon: Icon(Icons.search))
             ],
           ), SizedBox(height: 20,),
-                   SizedBox(height: 5),
+                  SizedBox(height: 5),
           Container(
             height: 1,
             color: GlobalHelper.getColorScheme(context).primary,
@@ -94,15 +98,11 @@ class DetailAttendancePage
                   height: 1,
                   color: GlobalHelper.getColorScheme(context).surface,
                 ),
-            itemCount:5,
+            itemCount: notifier.listAttendance.length,
             itemBuilder: (context, index) {
-              // final item =
-              //     notifier.listAttendanceThisMonth[notifier
-              //             .listAttendanceThisMonth
-              //             .length -
-              //         index -
-              //         1];
-              return _itemThisMonth(context, AttendanceEntity(startTime: "05:00:00", endTime: "01:00:00", date: '2025-12-22'));
+              final item = notifier.listAttendance[
+              notifier.listAttendance.length -index - 1];
+              return _itemThisMonth(context,item);
             },
           ),
         ],
@@ -167,6 +167,6 @@ class DetailAttendancePage
     );
   }
   _onPressSearch(){
-
+    notifier.search();
   }
 }

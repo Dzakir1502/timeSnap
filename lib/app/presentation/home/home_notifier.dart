@@ -23,9 +23,9 @@ class HomeNotifier extends AppProvider {
   ) {
     init();
   }
- 
+  
   String _name = '';
-  bool _isPhysicDevice = false;
+  bool _isPhysicDevice = true;
 
   AttendanceEntity? _attendanceToday;
   List<AttendanceEntity> _listAttendanceThisMonth = [];
@@ -43,7 +43,7 @@ class HomeNotifier extends AppProvider {
   @override
   void init() async {
     await _getUserDetail();
-    await _getDeviceInfo();
+    // await _getDeviceInfo();
     if (errorMessage.isEmpty) await _getAttendanceToday();
     if (errorMessage.isEmpty) await _getAttendanceThisMonth();
     if (errorMessage.isEmpty) await _getSchedule();
