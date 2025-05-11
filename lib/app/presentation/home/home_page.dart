@@ -53,7 +53,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                           Icon(Icons.location_city),
                           SizedBox(width: 5),
                           Text(
-                            'Office',
+                            notifier.schedule.office.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -68,7 +68,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                           Icon(Icons.access_time),
                           SizedBox(width: 5),
                           Text(
-                            'Siang',
+                            notifier.schedule.shift.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -134,7 +134,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   color: GlobalHelper.getColorScheme(context).onPrimary,
                 ),
                 child: Text(
-                  'WFA',
+                  (notifier.schedule.isWfa) ? 'WFA' : 'WFO',
                   style: GlobalHelper.getTextStyle(
                     context,
                     appTextStyle: AppTextStyle.LABEL_SMALL,

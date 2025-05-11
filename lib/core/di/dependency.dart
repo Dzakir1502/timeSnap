@@ -3,13 +3,17 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:timesnap/app/data/repository/attendance_repository.dart';
 import 'package:timesnap/app/data/repository/auth_repository.dart';
+import 'package:timesnap/app/data/repository/schedule_repository.dart';
 import 'package:timesnap/app/data/source/attendance_api_service.dart';
 import 'package:timesnap/app/data/source/auth_api_service.dart';
+import 'package:timesnap/app/data/source/schedule_api_service.dart';
 import 'package:timesnap/app/module/repository/attendance_repository.dart';
 import 'package:timesnap/app/module/repository/auth_repository.dart';
+import 'package:timesnap/app/module/repository/schedule_repository.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_this_month.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_today.dart';
 import 'package:timesnap/app/module/use_case/auth_login.dart';
+import 'package:timesnap/app/module/use_case/schedule_get.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/app/presentation/map/map_notifier.dart';
@@ -31,24 +35,27 @@ Future<void> initDependency() async {
   sl.registerSingleton<Dio>(dio);
 
   // apiservice
-
   sl.registerSingleton<AuthApiService>(AuthApiService(sl()));
   sl.registerSingleton<AttendanceApiService>(AttendanceApiService(sl()));
+  sl.registerSingleton<ScheduleApiService>(ScheduleApiService(sl()));
   // respository
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
   sl.registerSingleton<AttendanceRepository>(AttendanceRepositoryImpl(sl()));
+  sl.registerSingleton<ScheduleRepository>(ScheduleRepositoryImpl(sl()));
   // usecase
   sl.registerSingleton<AuthLoginUseCase>(AuthLoginUseCase(sl()));
   sl.registerSingleton<AttendanceGetTodayUseCase>(
     AttendanceGetTodayUseCase(sl()));
   sl.registerSingleton<AttendanceGetMonthUseCase>(
     AttendanceGetMonthUseCase(sl()));
+  sl.registerSingleton<ScheduleGetUsecase>(
+    ScheduleGetUsecase(sl()));
   // provider
   sl.registerFactoryParam<LoginNotifier, void, void>(
     (param1, param2) => LoginNotifier(sl()),
   );
   sl.registerFactoryParam<HomeNotifier, void, void>(
-    (param1, param2) => HomeNotifier(sl(), sl()),
+    (param1, param2) => HomeNotifier(sl(), sl(), sl()),
   );
   sl.registerFactoryParam<MapNotifier, void, void>(
     (param1, param2) => MapNotifier(),
