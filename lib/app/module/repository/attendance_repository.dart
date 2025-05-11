@@ -5,4 +5,5 @@ abstract class AttendanceRepository {
   Future<DataState<AttendanceEntity?>> getToday();
   Future<DataState<List<AttendanceEntity>>> getThisMonth();
   Future<DataState> sendAttendance(AttendanceParamEntity param);
+  Future<DataState<List<AttendanceEntity>>> getByMonthYear(AttendanceParamGetEntity param);
 }

@@ -39,3 +39,19 @@ Map<String, dynamic> _$$AttendanceParamEntityImplToJson(
       'longitude': instance.longitude,
       'runtimeType': instance.$type,
     };
+
+_$AttendanceParamGetEntityImpl _$$AttendanceParamGetEntityImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AttendanceParamGetEntityImpl(
+      month: (json['month'] as num).toInt(),
+      year: (json['year'] as num).toInt(),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$AttendanceParamGetEntityImplToJson(
+        _$AttendanceParamGetEntityImpl instance) =>
+    <String, dynamic>{
+      'month': instance.month,
+      'year': instance.year,
+      'runtimeType': instance.$type,
+    };

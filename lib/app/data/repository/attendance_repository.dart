@@ -13,30 +13,43 @@ class AttendanceRepositoryImpl extends AttendanceRepository {
 
   @override
   Future<DataState<List<AttendanceEntity>>> getThisMonth() {
-    return handleResponse(
-      () => _attendanceApiService.getAttendanceToday(), 
-    (json){
+    return handleResponse(() => _attendanceApiService.getAttendanceToday(), (
+      json,
+    ) {
       final attendanceModel = AttendanceModel.fromJson(json);
       return attendanceModel.thisMonth;
-    },
-  );
-}
+    });
+  }
 
   @override
   Future<DataState<AttendanceEntity?>> getToday() {
-    return handleResponse(
-      () => _attendanceApiService.getAttendanceToday(), 
-    (json) {
+    return handleResponse(() => _attendanceApiService.getAttendanceToday(), (
+      json,
+    ) {
       final attendanceModel = AttendanceModel.fromJson(json);
       return attendanceModel.today;
-    },
-  );
-}
-  
+    });
+  }
+
   @override
   Future<DataState> sendAttendance(AttendanceParamEntity param) {
-    return handleResponse(() => _attendanceApiService.sendAttendance(body: param.toJson()),
-    (json) => null,
+    return handleResponse(
+      () => _attendanceApiService.sendAttendance(body: param.toJson()),
+      (json) => null,
+    );
+  }
+
+  @override
+  Future<DataState<List<AttendanceEntity>>> getByMonthYear(
+    AttendanceParamGetEntity param,
+  ) {
+    return handleResponse(
+      () => _attendanceApiService.getAttendanceByMonthYear(
+        month: param.month.toString(),
+        year: param.year.toString(),
+      ),
+      (json) => List<AttendanceEntity>.from(
+          json.map((item) => AttendanceEntity.fromJson(item))),
     );
   }
 }
