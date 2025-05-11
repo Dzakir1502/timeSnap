@@ -30,6 +30,7 @@ class MapNotifier extends AppProvider {
   GeoPoint? _currentLocation;
   bool _isGrantedLocation = false;
   bool _isEnabledLocation = false;
+  bool _isMockedLocation = false;
 
   MapController get mapController => _mapController;
   ScheduleEntity get schedule => _schedule;
@@ -37,6 +38,7 @@ class MapNotifier extends AppProvider {
   bool get isEnabledLocation => _isEnabledLocation;
   bool get isSuccess => _isSuccess;
   bool get isEnableSubmitButton => _isEnableSubmitButton;
+  bool get isMockedLocation => _isMockedLocation;
 
   @override
   void init() async {
@@ -107,7 +109,13 @@ class MapNotifier extends AppProvider {
 
   _openStreamCurrentLocation() async {
     _streamCurrenLocation = Geolocator.getPositionStream().listen((position) {
-      if (!isDispose) {
+      if (position.isMocked) {
+        _isMockedLocation = true;
+        errorMessage = 'You are Using a Fake Location';
+        _closeStreamCurrentLocation();
+        notifyListeners();
+      }else{
+           if (!isDispose) {
         if (_currentLocation != null)
           _mapController.removeMarker(_currentLocation!);
         _currentLocation = GeoPoint(
@@ -125,6 +133,8 @@ class MapNotifier extends AppProvider {
       } else {
         _closeStreamCurrentLocation();
       }
+      }
+     
     });
   }
 

@@ -25,6 +25,13 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
         },
         child: Text('Aktifkan Lokasi'),
       );
+    } else if (notifier.isMockedLocation) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text('Close'),
+      );
     } else {
       alternatifErrorButton = null;
     }

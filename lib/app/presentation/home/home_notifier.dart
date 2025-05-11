@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:timesnap/app/data/model/attendance.dart';
 import 'package:timesnap/app/module/entity/attendance.dart';
 import 'package:timesnap/app/module/entity/schedule.dart';
@@ -19,6 +22,8 @@ class HomeNotifier extends AppProvider {
     init();
   }
 
+  bool _isPhysicDevice = false;
+
   AttendanceEntity? _attendanceToday;
   List<AttendanceEntity> _listAttendanceThisMonth = [];
   late ScheduleEntity _schedule;
@@ -28,12 +33,28 @@ class HomeNotifier extends AppProvider {
       _listAttendanceThisMonth;
 
   ScheduleEntity get schedule => _schedule;
+  bool get isPhysicDevice => _isPhysicDevice;
 
   @override
   void init() async {
-    await _getAttendanceToday();
+    await _getDeviceInfo();
+    if (errorMessage.isEmpty) await _getAttendanceToday();
     if (errorMessage.isEmpty) await _getAttendanceThisMonth();
     if (errorMessage.isEmpty) await _getSchedule();
+  }
+
+  _getDeviceInfo() async {
+    showLoading();
+    if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      _isPhysicDevice = androidInfo.isPhysicalDevice;
+    } else if (Platform.isIOS) {
+      final iOSInfo = await DeviceInfoPlugin().iosInfo;
+      _isPhysicDevice = iOSInfo.isPhysicalDevice;
+    }
+
+    if (!_isPhysicDevice) errorMessage = 'Anda Harus Memakai Perangkat Android/IOS';
+    hideLoading();
   }
 
   _getAttendanceToday() async {

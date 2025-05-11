@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:timesnap/app/module/entity/attendance.dart';
@@ -10,6 +12,20 @@ import 'package:timesnap/core/helper/shared_preferences_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
 
 class HomePage extends AppWidget<HomeNotifier, void, void> {
+  @override
+  void checkVariableBeforeUi(BuildContext context) {
+    if (!notifier.isPhysicDevice) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () {
+          exit(0);
+        },
+        child: Text('Close'),
+      );
+    } else {
+      alternatifErrorButton = null;
+    }
+  }
+
   @override
   Widget bodyBuild(BuildContext context) {
     return SafeArea(
@@ -86,7 +102,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             ),
           ),
           SizedBox(width: 10),
-          IconButton(onPressed: () => _onPressLogout(context), icon: Icon(Icons.logout)),
+          IconButton(
+            onPressed: () => _onPressLogout(context),
+            icon: Icon(Icons.logout),
+          ),
         ],
       ),
     );
@@ -373,7 +392,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
     await SharedPreferencesHelper.logout();
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage(),),
+      MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
     );
   }
