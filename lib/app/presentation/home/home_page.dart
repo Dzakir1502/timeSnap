@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:timesnap/app/module/entity/attendance.dart';
+import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_page.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_page.dart';
 import 'package:timesnap/app/presentation/map/map_page.dart';
@@ -209,7 +210,9 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       width: double.maxFinite,
       margin: EdgeInsets.all(20),
       padding: EdgeInsets.all(20),
-      constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height - kToolbarHeight),
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height - kToolbarHeight,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         color: GlobalHelper.getColorScheme(context).primaryContainer,
@@ -217,12 +220,19 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Your Activity',
-            style: GlobalHelper.getTextStyle(
-              context,
-              appTextStyle: AppTextStyle.TITLE_LARGE,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Your Activity',
+                  style: GlobalHelper.getTextStyle(
+                    context,
+                    appTextStyle: AppTextStyle.TITLE_LARGE,
+                  ),
+                ),
+              ),
+              FilledButton(onPressed: () => _onPressSeeAll(context), child: Text('See More')),
+            ],
           ),
           SizedBox(height: 5),
           Container(
@@ -397,6 +407,13 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       context,
       MaterialPageRoute(builder: (context) => LoginPage()),
       (route) => false,
+    );
+  }
+
+  _onPressSeeAll(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DetailAttendancePage()),
     );
   }
 }

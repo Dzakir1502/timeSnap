@@ -15,6 +15,7 @@ import 'package:timesnap/app/module/use_case/attendance_get_today.dart';
 import 'package:timesnap/app/module/use_case/attendance_send.dart';
 import 'package:timesnap/app/module/use_case/auth_login.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
+import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_notifier.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/app/presentation/map/map_notifier.dart';
@@ -65,5 +66,8 @@ Future<void> initDependency() async {
   );
   sl.registerFactoryParam<MapNotifier, void, void>(
     (param1, param2) => MapNotifier(sl(), sl()),
+  );
+  sl.registerFactoryParam<DetailAttendanceNotifier, void, void>(
+    (param1, param2) => DetailAttendanceNotifier(),
   );
 }
