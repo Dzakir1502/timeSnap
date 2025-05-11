@@ -38,10 +38,12 @@ Future<void> initDependency() async {
   sl.registerSingleton<AuthApiService>(AuthApiService(sl()));
   sl.registerSingleton<AttendanceApiService>(AttendanceApiService(sl()));
   sl.registerSingleton<ScheduleApiService>(ScheduleApiService(sl()));
+
   // respository
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
   sl.registerSingleton<AttendanceRepository>(AttendanceRepositoryImpl(sl()));
   sl.registerSingleton<ScheduleRepository>(ScheduleRepositoryImpl(sl()));
+
   // usecase
   sl.registerSingleton<AuthLoginUseCase>(AuthLoginUseCase(sl()));
   sl.registerSingleton<AttendanceGetTodayUseCase>(
@@ -50,6 +52,7 @@ Future<void> initDependency() async {
     AttendanceGetMonthUseCase(sl()));
   sl.registerSingleton<ScheduleGetUsecase>(
     ScheduleGetUsecase(sl()));
+
   // provider
   sl.registerFactoryParam<LoginNotifier, void, void>(
     (param1, param2) => LoginNotifier(sl()),
@@ -58,6 +61,6 @@ Future<void> initDependency() async {
     (param1, param2) => HomeNotifier(sl(), sl(), sl()),
   );
   sl.registerFactoryParam<MapNotifier, void, void>(
-    (param1, param2) => MapNotifier(),
+    (param1, param2) => MapNotifier(sl()),
   );
 }

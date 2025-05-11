@@ -3,17 +3,44 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:timesnap/app/presentation/map/map_notifier.dart';
 import 'package:timesnap/core/helper/global_helper.dart';
+import 'package:timesnap/core/helper/location_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
 import 'package:timesnap/core/widget/loading_app_widget.dart';
 
 class MapPage extends AppWidget<MapNotifier, void, void> {
   @override
+  void checkVariableBeforeUi(BuildContext context) {
+    if (!notifier.isGrantedLocation) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () async {
+          await LocationHelper.showDialogLocationPermission(context);
+          notifier.checkLocationPermission();
+        },
+        child: Text('Setuju'),
+      );
+    } else if (!notifier.isEnabledLocation) {
+      alternatifErrorButton = FilledButton(
+        onPressed: () async {
+          LocationHelper.openLocationSettings();
+        },
+        child: Text('Aktifkan Lokasi'),
+      );
+    } else {
+      alternatifErrorButton = null;
+    }
+  }
+
+  @override
   AppBar? appBarBuild(BuildContext context) {
-    return AppBar(title: Text("Make Attendance",
-     style: GlobalHelper.getTextStyle(
-                              context,
-                              appTextStyle: AppTextStyle.TITLE_LARGE,
-                            ),));
+    return AppBar(
+      title: Text(
+        "Make Attendance",
+        style: GlobalHelper.getTextStyle(
+          context,
+          appTextStyle: AppTextStyle.TITLE_LARGE,
+        ),
+      ),
+    );
   }
 
   @override
@@ -31,7 +58,11 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                   minZoomLevel: 10,
                 ),
               ),
-              onMapIsReady: (p0) {},
+              onMapIsReady: (p0) {
+                if (p0) {
+                  notifier.mapIsReady();
+                }
+              },
               mapIsLoading: LoadingAppWidget(),
             ),
           ),
@@ -62,7 +93,7 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Office",
+                            notifier.schedule.office.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.TITLE_MEDIUM,
@@ -79,7 +110,7 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                                   GlobalHelper.getColorScheme(context).primary,
                             ),
                             child: Text(
-                              'WFA',
+                              (notifier.schedule.isWfa) ? 'WFA' : 'WFO',
                               style: GlobalHelper.getTextStyle(
                                 context,
                                 appTextStyle: AppTextStyle.BODY_SMALL,
@@ -95,7 +126,7 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 5),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -105,18 +136,18 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Siang",
+                            notifier.schedule.shift.name,
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.TITLE_MEDIUM,
                             ),
                           ),
                           Text(
-                            '22:00 - 08:00',
+                            '${notifier.schedule.shift.startTime} - ${notifier.schedule.shift.endTime}',
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_SMALL,
-                            )
+                            ),
                           ),
                         ],
                       ),
@@ -124,10 +155,10 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
                   ),
                 ],
               ),
-            Expanded(child: SizedBox())
+              Expanded(child: SizedBox()),
             ],
           ),
-        SizedBox(height: 10,),
+          SizedBox(height: 10),
           Container(
             width: double.maxFinite,
             child: FilledButton(

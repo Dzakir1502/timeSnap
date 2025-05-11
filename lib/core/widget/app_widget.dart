@@ -15,7 +15,7 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
   final P2? param2;
   FilledButton? _alternatifErrorButton;
 
-  set alternatifErrorButton(FilledButton param)=>
+  set alternatifErrorButton(FilledButton? param)=>
     _alternatifErrorButton = param;
   
 
