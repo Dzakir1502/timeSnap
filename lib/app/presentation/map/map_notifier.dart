@@ -114,27 +114,26 @@ class MapNotifier extends AppProvider {
         errorMessage = 'You are Using a Fake Location';
         _closeStreamCurrentLocation();
         notifyListeners();
-      }else{
-           if (!isDispose) {
-        if (_currentLocation != null)
-          _mapController.removeMarker(_currentLocation!);
-        _currentLocation = GeoPoint(
-          latitude: position.latitude,
-          longitude: position.longitude,
-        );
-        _mapController.addMarker(
-          _currentLocation!,
-          markerIcon: MarkerIcon(
-            icon: Icon(Icons.account_circle, color: Colors.red, size: 30),
-          ),
-        );
-        _mapController.moveTo(_currentLocation!, animate: true);
-        _validationSubmitButton();
       } else {
-        _closeStreamCurrentLocation();
+        if (!isDispose && !isLoading) {
+          if (_currentLocation != null)
+            _mapController.removeMarker(_currentLocation!);
+          _currentLocation = GeoPoint(
+            latitude: position.latitude,
+            longitude: position.longitude,
+          );
+          _mapController.addMarker(
+            _currentLocation!,
+            markerIcon: MarkerIcon(
+              icon: Icon(Icons.account_circle, color: Colors.red, size: 30),
+            ),
+          );
+          _mapController.moveTo(_currentLocation!, animate: true);
+          _validationSubmitButton();
+        } else {
+          _closeStreamCurrentLocation();
+        }
       }
-      }
-     
     });
   }
 
@@ -144,7 +143,10 @@ class MapNotifier extends AppProvider {
 
   _validationSubmitButton() {
     if (_schedule.isWfa) {
-      _isEnableSubmitButton = true;
+      if (!_isEnableSubmitButton) {
+        _isEnableSubmitButton = true;
+        notifyListeners();
+      }
     } else {
       final inCircle = LocationHelper.isLocationInCircle(
         _circle,
