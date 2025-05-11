@@ -14,4 +14,7 @@ abstract class PhotoApiService {
 
   @GET('/api/get-photo')
   Future<HttpResponse<DataState>> get();
+
+  @GET('{path}')
+  Future<HttpResponse<dynamic>> getBytes({@Path('path') required String path});
 }
