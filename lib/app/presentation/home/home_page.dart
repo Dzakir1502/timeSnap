@@ -146,10 +146,16 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
           SizedBox(height: 10),
           Row(
             children: [
-              _timeTodayLayout(context, 'Datang',
-                notifier.attendanceToday?.startTime ?? '-'),
-              _timeTodayLayout(context, 'Pulang',
-                notifier.attendanceToday?.endTime ?? '-'),
+              _timeTodayLayout(
+                context,
+                'Come',
+                notifier.attendanceToday?.startTime ?? '-',
+              ),
+              _timeTodayLayout(
+                context,
+                'Go Home',
+                notifier.attendanceToday?.endTime ?? '-',
+              ),
             ],
           ),
           SizedBox(height: 20),
@@ -158,7 +164,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             child: FilledButton(
               onPressed: () => _onPressCreateAttendance(context),
               child: Text(
-                'Buat Kehadiran',
+                'Create Attendance',
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -188,7 +194,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Last Month Attendance',
+            'Your Activity',
             style: GlobalHelper.getTextStyle(
               context,
               appTextStyle: AppTextStyle.TITLE_LARGE,
@@ -206,7 +212,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    'Tgl',
+                    'Date',
                     style: GlobalHelper.getTextStyle(
                       context,
                       appTextStyle: AppTextStyle.TITLE_SMALL,
@@ -218,7 +224,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 flex: 2,
                 child: Center(
                   child: Text(
-                    'Datang',
+                    'Come',
                     style: GlobalHelper.getTextStyle(
                       context,
                       appTextStyle: AppTextStyle.TITLE_SMALL,
@@ -230,7 +236,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 flex: 2,
                 child: Center(
                   child: Text(
-                    'Pulang',
+                    'Go Home',
                     style: GlobalHelper.getTextStyle(
                       context,
                       appTextStyle: AppTextStyle.TITLE_SMALL,
@@ -256,7 +262,12 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 ),
             itemCount: notifier.listAttendanceThisMonth.length,
             itemBuilder: (context, index) {
-              final item = notifier.listAttendanceThisMonth[notifier.listAttendanceThisMonth.length - index - 1];
+              final item =
+                  notifier.listAttendanceThisMonth[notifier
+                          .listAttendanceThisMonth
+                          .length -
+                      index -
+                      1];
               return _itemThisMonth(context, item);
             },
           ),
@@ -305,7 +316,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 color: GlobalHelper.getColorScheme(context).primary,
               ),
               child: Text(
-                DateTimeHelper.formatDateTimeFromString(dateTimeString: item.date!, format: 'dd\nMMM'),
+                DateTimeHelper.formatDateTimeFromString(
+                  dateTimeString: item.date!,
+                  format: 'dd\nMMM',
+                ),
                 style: GlobalHelper.getTextStyle(
                   context,
                   appTextStyle: AppTextStyle.LABEL_LARGE,
@@ -345,7 +359,11 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
     );
   }
 
-  _onPressCreateAttendance(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage()));
+  _onPressCreateAttendance(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapPage()),
+    );
+    notifier.init();
   }
 }

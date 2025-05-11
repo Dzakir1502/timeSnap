@@ -31,6 +31,13 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
   }
 
   @override
+  void checkVariableAfterUi(BuildContext context) {
+    if (notifier.isSuccess) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
   AppBar? appBarBuild(BuildContext context) {
     return AppBar(
       title: Text(
@@ -162,12 +169,17 @@ class MapPage extends AppWidget<MapNotifier, void, void> {
           Container(
             width: double.maxFinite,
             child: FilledButton(
-              onPressed: () {},
+              onPressed:
+                  (notifier.isEnableSubmitButton) ? _onPressSubmit : null,
               child: Text('Send attendance'),
             ),
           ),
         ],
       ),
     );
+  }
+
+  _onPressSubmit() {
+    notifier.send();
   }
 }

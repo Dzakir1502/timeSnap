@@ -3,18 +3,23 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:timesnap/app/module/entity/attendance.dart';
 import 'package:timesnap/app/module/entity/schedule.dart';
+import 'package:timesnap/app/module/use_case/attendance_send.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
 import 'package:timesnap/core/helper/location_helper.dart';
 import 'package:timesnap/core/provider/app_provider.dart';
 
 class MapNotifier extends AppProvider {
   final ScheduleGetUsecase _scheduleGetUsecase;
+  final AttendanceSendUseCase _attendanceSendUseCase;
 
-  MapNotifier(this._scheduleGetUsecase) {
+  MapNotifier(this._scheduleGetUsecase, this._attendanceSendUseCase) {
     init();
   }
 
+  bool _isSuccess = false;
+  bool _isEnableSubmitButton = false;
   MapController _mapController = MapController.withPosition(
     initPosition: GeoPoint(latitude: -6.17549964024, longitude: 106.827149391),
   );
@@ -30,6 +35,8 @@ class MapNotifier extends AppProvider {
   ScheduleEntity get schedule => _schedule;
   bool get isGrantedLocation => _isGrantedLocation;
   bool get isEnabledLocation => _isEnabledLocation;
+  bool get isSuccess => _isSuccess;
+  bool get isEnableSubmitButton => _isEnableSubmitButton;
 
   @override
   void init() async {
@@ -101,20 +108,20 @@ class MapNotifier extends AppProvider {
   _openStreamCurrentLocation() async {
     _streamCurrenLocation = Geolocator.getPositionStream().listen((position) {
       if (!isDispose) {
-        if (_currentLocation != null) 
+        if (_currentLocation != null)
           _mapController.removeMarker(_currentLocation!);
-          _currentLocation = GeoPoint(
-            latitude: position.latitude,
-            longitude: position.longitude,
-          );
-          _mapController.addMarker(
-            _currentLocation!,
-            markerIcon: MarkerIcon(
-              icon: Icon(Icons.account_circle, color: Colors.red, size: 30),
-            ),
-          );
-          _mapController.moveTo(_currentLocation!, animate: true);
-        
+        _currentLocation = GeoPoint(
+          latitude: position.latitude,
+          longitude: position.longitude,
+        );
+        _mapController.addMarker(
+          _currentLocation!,
+          markerIcon: MarkerIcon(
+            icon: Icon(Icons.account_circle, color: Colors.red, size: 30),
+          ),
+        );
+        _mapController.moveTo(_currentLocation!, animate: true);
+        _validationSubmitButton();
       } else {
         _closeStreamCurrentLocation();
       }
@@ -123,5 +130,36 @@ class MapNotifier extends AppProvider {
 
   _closeStreamCurrentLocation() {
     _streamCurrenLocation.cancel();
+  }
+
+  _validationSubmitButton() {
+    if (_schedule.isWfa) {
+      _isEnableSubmitButton = true;
+    } else {
+      final inCircle = LocationHelper.isLocationInCircle(
+        _circle,
+        _currentLocation!,
+      );
+      if (inCircle != _isEnableSubmitButton) {
+        _isEnableSubmitButton = inCircle;
+        notifyListeners();
+      }
+    }
+  }
+
+  send() async {
+    showLoading();
+    final response = await _attendanceSendUseCase(
+      param: AttendanceParamEntity(
+        latitude: _currentLocation!.latitude,
+        longitude: _currentLocation!.longitude,
+      ),
+    );
+    if (response.success) {
+      _isSuccess = true;
+    } else {
+      snackBarMessage = response.message;
+    }
+    hideLoading();
   }
 }

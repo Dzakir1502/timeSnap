@@ -12,6 +12,7 @@ import 'package:timesnap/app/module/repository/auth_repository.dart';
 import 'package:timesnap/app/module/repository/schedule_repository.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_this_month.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_today.dart';
+import 'package:timesnap/app/module/use_case/attendance_send.dart';
 import 'package:timesnap/app/module/use_case/auth_login.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
@@ -52,6 +53,8 @@ Future<void> initDependency() async {
     AttendanceGetMonthUseCase(sl()));
   sl.registerSingleton<ScheduleGetUsecase>(
     ScheduleGetUsecase(sl()));
+  sl.registerSingleton<AttendanceSendUseCase>(
+    AttendanceSendUseCase(sl()));
 
   // provider
   sl.registerFactoryParam<LoginNotifier, void, void>(
@@ -61,6 +64,6 @@ Future<void> initDependency() async {
     (param1, param2) => HomeNotifier(sl(), sl(), sl()),
   );
   sl.registerFactoryParam<MapNotifier, void, void>(
-    (param1, param2) => MapNotifier(sl()),
+    (param1, param2) => MapNotifier(sl(), sl()),
   );
 }
