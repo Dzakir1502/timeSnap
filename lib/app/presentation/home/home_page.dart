@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:timesnap/app/module/entity/attendance.dart';
 import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_page.dart';
+import 'package:timesnap/app/presentation/face_recognition/face_recognition_page.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_page.dart';
 import 'package:timesnap/app/presentation/map/map_page.dart';
@@ -396,7 +397,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
   _onPressCreateAttendance(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MapPage()),
+      MaterialPageRoute(builder: (context) => FaceRecognitionPage()),
     );
     notifier.init();
   }
@@ -409,6 +410,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       (route) => false,
     );
   }
+  
 
   _onPressSeeAll(context) {
     Navigator.push(
