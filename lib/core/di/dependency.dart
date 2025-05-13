@@ -3,20 +3,25 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:timesnap/app/data/repository/attendance_repository.dart';
 import 'package:timesnap/app/data/repository/auth_repository.dart';
+import 'package:timesnap/app/data/repository/photo_repository.dart';
 import 'package:timesnap/app/data/repository/schedule_repository.dart';
 import 'package:timesnap/app/data/source/attendance_api_service.dart';
 import 'package:timesnap/app/data/source/auth_api_service.dart';
+import 'package:timesnap/app/data/source/photo_api_service.dart';
 import 'package:timesnap/app/data/source/schedule_api_service.dart';
 import 'package:timesnap/app/module/repository/attendance_repository.dart';
 import 'package:timesnap/app/module/repository/auth_repository.dart';
+import 'package:timesnap/app/module/repository/photo_repository.dart';
 import 'package:timesnap/app/module/repository/schedule_repository.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_by_month_year.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_this_month.dart';
 import 'package:timesnap/app/module/use_case/attendance_get_today.dart';
 import 'package:timesnap/app/module/use_case/attendance_send.dart';
 import 'package:timesnap/app/module/use_case/auth_login.dart';
+import 'package:timesnap/app/module/use_case/photo_get_bytes.dart';
 import 'package:timesnap/app/module/use_case/schedule_get.dart';
 import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_notifier.dart';
+import 'package:timesnap/app/presentation/face_recognition/face_recognition_notifier.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
 import 'package:timesnap/app/presentation/map/map_notifier.dart';
@@ -41,11 +46,13 @@ Future<void> initDependency() async {
   sl.registerSingleton<AuthApiService>(AuthApiService(sl()));
   sl.registerSingleton<AttendanceApiService>(AttendanceApiService(sl()));
   sl.registerSingleton<ScheduleApiService>(ScheduleApiService(sl()));
+  sl.registerSingleton<PhotoApiService>(PhotoApiService(sl()));
 
   // respository
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
   sl.registerSingleton<AttendanceRepository>(AttendanceRepositoryImpl(sl()));
   sl.registerSingleton<ScheduleRepository>(ScheduleRepositoryImpl(sl()));
+  sl.registerSingleton<PhotoRepository>(PhotoRepositoryImpl(sl()));
 
   // usecase
   sl.registerSingleton<AuthLoginUseCase>(AuthLoginUseCase(sl()));
@@ -59,6 +66,9 @@ Future<void> initDependency() async {
     AttendanceSendUseCase(sl()));
   sl.registerSingleton<AttendanceGetByMonthYear>(
     AttendanceGetByMonthYear(sl()));
+  sl.registerSingleton<PhotoGetBytesUseCase>(
+    PhotoGetBytesUseCase(sl()));
+
   // provider
   sl.registerFactoryParam<LoginNotifier, void, void>(
     (param1, param2) => LoginNotifier(sl()),
@@ -71,5 +81,8 @@ Future<void> initDependency() async {
   );
   sl.registerFactoryParam<DetailAttendanceNotifier, void, void>(
     (param1, param2) => DetailAttendanceNotifier(sl()),
+  );
+  sl.registerFactoryParam<FaceRecognitionNotifier, void, void>(
+    (param1, param2) => FaceRecognitionNotifier(sl()),
   );
 }
