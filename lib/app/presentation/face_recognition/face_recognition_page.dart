@@ -9,7 +9,7 @@ class FaceRecognitionPage
     extends AppWidget<FaceRecognitionNotifier, void, void> {
   @override
   void checkVariableAfterUi(BuildContext context) {
-    if (notifier.percentMatch >= 90) {
+    if (notifier.percentMatch >= 70) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MapPage()),
@@ -18,10 +18,14 @@ class FaceRecognitionPage
   }
 
   @override
+  AppBar? appBarBuild(BuildContext context) {
+    return AppBar(title: Text('Face validation'));
+  }
+
+  @override
   Widget bodyBuild(BuildContext context) {
     return SafeArea(
       child: Center(
-        
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -35,7 +39,7 @@ class FaceRecognitionPage
             SizedBox(height: 50),
             (notifier.currentImage == null)
                 ? Text(
-                  "failed to take Photo",
+                  "Failed to take Photo",
                   style: GlobalHelper.getTextStyle(
                     context,
                     appTextStyle: AppTextStyle.HEADLINE_MEDIUM,
@@ -58,9 +62,18 @@ class FaceRecognitionPage
                   ),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(height: 25,),
+            FilledButton(
+              onPressed: _onPressOpenCamera,
+              child: Text("Open Camera"),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  _onPressOpenCamera() {
+    notifier.getCurrentPhoto();
   }
 }

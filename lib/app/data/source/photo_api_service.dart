@@ -16,5 +16,6 @@ abstract class PhotoApiService {
   Future<HttpResponse<DataState>> get();
 
   @GET('{path}')
-  Future<HttpResponse<dynamic>> getBytes({@Path('path') required String path});
+  @DioResponseType(ResponseType.bytes)
+  Future<HttpResponse<List<int>>> getBytes({@Path('path') required String path});
 }
