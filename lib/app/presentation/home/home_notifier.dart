@@ -23,22 +23,22 @@ class HomeNotifier extends AppProvider {
   ) {
     init();
   }
-  
+
   String _name = '';
   bool _isPhysicDevice = true;
 
   AttendanceEntity? _attendanceToday;
   List<AttendanceEntity> _listAttendanceThisMonth = [];
-  late ScheduleEntity _schedule;
+  ScheduleEntity? _schedule;
+  bool _isLeave = false;
 
   AttendanceEntity? get attendanceToday => _attendanceToday;
   List<AttendanceEntity> get listAttendanceThisMonth =>
       _listAttendanceThisMonth;
-
-  ScheduleEntity get schedule => _schedule;
+  String get name => _name;
+  ScheduleEntity? get schedule => _schedule;
   bool get isPhysicDevice => _isPhysicDevice;
-  
-  String  get name => _name;
+  bool get isLeave => _isLeave;
 
   @override
   void init() async {
@@ -49,7 +49,7 @@ class HomeNotifier extends AppProvider {
     if (errorMessage.isEmpty) await _getSchedule();
   }
 
-  _getUserDetail() async{
+  _getUserDetail() async {
     showLoading();
     _name = await SharedPreferencesHelper.getString(PREF_NAME);
     hideLoading();
@@ -95,9 +95,15 @@ class HomeNotifier extends AppProvider {
 
   _getSchedule() async {
     showLoading();
+    _isLeave = false;
     final response = await _scheduleGetUsecase();
     if (response.success) {
-      _schedule = response.data!;
+      if (response.data != null) {
+        _schedule = response.data!;
+      } else {
+        _isLeave = true;
+        snackBarMessage = response.message;
+      }
     } else {
       errorMessage = response.message;
     }

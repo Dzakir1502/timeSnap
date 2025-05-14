@@ -67,7 +67,9 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   )?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
-                Row(
+                (notifier.isLeave) 
+                ? SizedBox() 
+                :Row(
                   children: [
                     Expanded(
                       child: Row(
@@ -75,7 +77,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                           Icon(Icons.location_city),
                           SizedBox(width: 5),
                           Text(
-                            notifier.schedule.office.name,
+                            notifier.schedule?.office.name ?? '',
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -90,7 +92,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                           Icon(Icons.access_time),
                           SizedBox(width: 5),
                           Text(
-                            notifier.schedule.shift.name,
+                            notifier.schedule?.shift.name ?? '',
                             style: GlobalHelper.getTextStyle(
                               context,
                               appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -151,15 +153,16 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 ),
               ),
               Expanded(child: SizedBox()),
-
-              Container(
+              (notifier.isLeave) 
+              ? SizedBox()
+              :Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: GlobalHelper.getColorScheme(context).onPrimary,
                 ),
                 child: Text(
-                  (notifier.schedule.isWfa) ? 'WFA' : 'WFO',
+                  (notifier.schedule?.isWfa ?? false) ? 'WFA' : 'WFO',
                   style: GlobalHelper.getTextStyle(
                     context,
                     appTextStyle: AppTextStyle.LABEL_SMALL,
@@ -183,8 +186,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
               ),
             ],
           ),
-          SizedBox(height: 20),
-          Container(
+          SizedBox(height: 30),
+           (notifier.isLeave)
+           ? Text("You're on Leave", style: GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.TITLE_LARGE)?.copyWith(color: GlobalHelper.getColorScheme(context).onPrimary, fontWeight: FontWeight.bold))
+           :Container(
             width: double.maxFinite,
             child: FilledButton(
               onPressed: () => _onPressCreateAttendance(context),
