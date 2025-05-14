@@ -41,7 +41,7 @@ class HomeNotifier extends AppProvider {
   bool get isLeave => _isLeave;
 
   @override
-  void init() async {
+  Future<void> init() async {
     await _getUserDetail();
     // await _getDeviceInfo();
     if (errorMessage.isEmpty) await _getAttendanceToday();

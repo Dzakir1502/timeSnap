@@ -15,6 +15,7 @@ class ScheduleRepositoryImpl extends ScheduleRepository {
     return handleResponse(() => _scheduleApiService.get(), (json) {
       if (json != null) {
         return ScheduleEntity.fromJson(json);
+        
       } else {
         return null;
       }
