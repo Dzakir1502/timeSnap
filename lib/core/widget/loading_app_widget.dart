@@ -9,6 +9,7 @@ class LoadingAppWidget extends StatelessWidget {
       child: Container(
         height: 100,
         width: 100,
+        
         child: CircularProgressIndicator(),
       ),
     );
