@@ -1,10 +1,40 @@
+import 'package:flutter/cupertino.dart';
+import 'package:timesnap/app/module/entity/leave.dart';
+import 'package:timesnap/app/module/use_case/leave_send.dart';
 import 'package:timesnap/core/provider/app_provider.dart';
 
-class LeaveNotifier extends AppProvider{
+class LeaveNotifier extends AppProvider {
+  final LeaveSendUseCase _leaveSendUseCase;
+  LeaveNotifier(this._leaveSendUseCase) {
+    init();
+  }
 
-  
+  bool _isSuccess = false;
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _endDateController = TextEditingController();
+  TextEditingController _reasonController = TextEditingController();
+
+  bool get isSuccess => _isSuccess;
+  TextEditingController get startDateController => _startDateController;
+  TextEditingController get endDateController => _endDateController;
+  TextEditingController get reasonController => _reasonController;
+
   @override
-  void init() {
-    // TODO: implement init
+  void init() {}
+
+  send() async {
+    showLoading();
+    final param = LeaveParamEntity(
+      startDate: _startDateController.text,
+      endDate: _endDateController.text,
+      reason: _reasonController.text,
+    );
+    final response = await _leaveSendUseCase(param: param);
+    if (response.success) {
+      _isSuccess = true;
+    } else {
+      snackBarMessage = response.message;
+    }
+    hideLoading();
   }
 }
