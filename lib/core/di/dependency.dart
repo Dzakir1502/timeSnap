@@ -24,6 +24,7 @@ import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_not
 import 'package:timesnap/app/presentation/face_recognition/face_recognition_notifier.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_notifier.dart';
+import 'package:timesnap/app/presentation/leave/leave_notifier.dart';
 import 'package:timesnap/app/presentation/map/map_notifier.dart';
 import 'package:timesnap/core/network/app_interceptor.dart';
 
@@ -84,5 +85,8 @@ Future<void> initDependency() async {
   );
   sl.registerFactoryParam<FaceRecognitionNotifier, void, void>(
     (param1, param2) => FaceRecognitionNotifier(sl()),
+  );
+  sl.registerFactoryParam<LeaveNotifier, void, void>(
+    (param1, param2) => LeaveNotifier(),
   );
 }

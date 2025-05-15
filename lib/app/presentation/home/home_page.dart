@@ -7,8 +7,10 @@ import 'package:timesnap/app/presentation/detail_atendance/detail_attendance_pag
 import 'package:timesnap/app/presentation/face_recognition/face_recognition_page.dart';
 import 'package:timesnap/app/presentation/home/home_notifier.dart';
 import 'package:timesnap/app/presentation/intro/login_page.dart';
+import 'package:timesnap/app/presentation/leave/leave_page.dart';
 import 'package:timesnap/app/presentation/map/map_page.dart';
 import 'package:timesnap/core/helper/date_time_helper.dart';
+import 'package:timesnap/core/helper/dialog_helper.dart';
 import 'package:timesnap/core/helper/global_helper.dart';
 import 'package:timesnap/core/helper/shared_preferences_helper.dart';
 import 'package:timesnap/core/widget/app_widget.dart';
@@ -70,50 +72,50 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   )?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),
-                (notifier.isLeave) 
-                ? SizedBox() 
-                :Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Icon(Icons.location_city),
-                          SizedBox(width: 5),
-                          Text(
-                            notifier.schedule?.office.name ?? '',
-                            style: GlobalHelper.getTextStyle(
-                              context,
-                              appTextStyle: AppTextStyle.BODY_MEDIUM,
-                            ),
+                (notifier.isLeave)
+                    ? SizedBox()
+                    : Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_city),
+                              SizedBox(width: 5),
+                              Text(
+                                notifier.schedule?.office.name ?? '',
+                                style: GlobalHelper.getTextStyle(
+                                  context,
+                                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Icon(Icons.access_time),
-                          SizedBox(width: 5),
-                          Text(
-                            notifier.schedule?.shift.name ?? '',
-                            style: GlobalHelper.getTextStyle(
-                              context,
-                              appTextStyle: AppTextStyle.BODY_MEDIUM,
-                            ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Icon(Icons.access_time),
+                              SizedBox(width: 5),
+                              Text(
+                                notifier.schedule?.shift.name ?? '',
+                                style: GlobalHelper.getTextStyle(
+                                  context,
+                                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                                ),
+                              ),
+                              SizedBox(width: 5),
+                            ],
                           ),
-                          SizedBox(width: 5),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
               ],
             ),
           ),
           SizedBox(width: 10),
           IconButton(
-            onPressed: () => _onPressLogout(context),
-            icon: Icon(Icons.logout),
+            onPressed: () => _onPressMenu(context),
+            icon: Icon(Icons.menu),
           ),
         ],
       ),
@@ -156,22 +158,22 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 ),
               ),
               Expanded(child: SizedBox()),
-              (notifier.isLeave) 
-              ? SizedBox()
-              :Container(
-                padding: EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: GlobalHelper.getColorScheme(context).onPrimary,
-                ),
-                child: Text(
-                  (notifier.schedule?.isWfa ?? false) ? 'WFA' : 'WFO',
-                  style: GlobalHelper.getTextStyle(
-                    context,
-                    appTextStyle: AppTextStyle.LABEL_SMALL,
+              (notifier.isLeave)
+                  ? SizedBox()
+                  : Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: GlobalHelper.getColorScheme(context).onPrimary,
+                    ),
+                    child: Text(
+                      (notifier.schedule?.isWfa ?? false) ? 'WFA' : 'WFO',
+                      style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.LABEL_SMALL,
+                      ),
+                    ),
                   ),
-                ),
-              ),
             ],
           ),
           SizedBox(height: 10),
@@ -190,25 +192,36 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
             ],
           ),
           SizedBox(height: 30),
-           (notifier.isLeave)
-           ? Text("You're on Leave", style: GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.TITLE_LARGE)?.copyWith(color: GlobalHelper.getColorScheme(context).onPrimary, fontWeight: FontWeight.bold))
-           :Container(
-            width: double.maxFinite,
-            child: FilledButton(
-              onPressed: () => _onPressCreateAttendance(context),
-              child: Text(
-                'Create Attendance',
+          (notifier.isLeave)
+              ? Text(
+                "You're on Leave",
                 style: GlobalHelper.getTextStyle(
                   context,
-                  appTextStyle: AppTextStyle.BODY_MEDIUM,
+                  appTextStyle: AppTextStyle.TITLE_LARGE,
+                )?.copyWith(
+                  color: GlobalHelper.getColorScheme(context).onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+              : Container(
+                width: double.maxFinite,
+                child: FilledButton(
+                  onPressed: () => _onPressCreateAttendance(context),
+                  child: Text(
+                    'Create Attendance',
+                    style: GlobalHelper.getTextStyle(
+                      context,
+                      appTextStyle: AppTextStyle.BODY_MEDIUM,
+                    ),
+                  ),
+                  style: FilledButton.styleFrom(
+                    backgroundColor:
+                        GlobalHelper.getColorScheme(context).onPrimary,
+                    foregroundColor:
+                        GlobalHelper.getColorScheme(context).primary,
+                  ),
                 ),
               ),
-              style: FilledButton.styleFrom(
-                backgroundColor: GlobalHelper.getColorScheme(context).onPrimary,
-                foregroundColor: GlobalHelper.getColorScheme(context).primary,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -240,7 +253,10 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   ),
                 ),
               ),
-              FilledButton(onPressed: () => _onPressSeeAll(context), child: Text('See More')),
+              FilledButton(
+                onPressed: () => _onPressSeeAll(context),
+                child: Text('See More'),
+              ),
             ],
           ),
           SizedBox(height: 5),
@@ -418,12 +434,41 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
       (route) => false,
     );
   }
-  
 
   _onPressSeeAll(context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DetailAttendancePage()),
     );
+  }
+
+  _onPressMenu(BuildContext context) {
+    DialogHelper.showBottomDialog(
+      context: context,
+      content: Column(
+        children: [
+          Container(
+            width: double.maxFinite,
+            child: OutlinedButton.icon(
+              label: Text('leave request'),
+              onPressed: () => _onPressLeave(context),
+              icon: Icon(Icons.leave_bags_at_home),
+            ),
+          ),
+          Container(
+            width: double.maxFinite,
+            child: OutlinedButton.icon(
+              label: Text('Logout'),
+              onPressed: () => _onPressLogout(context),
+              icon: Icon(Icons.logout),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _onPressLeave(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => LeavePage()));
   }
 }
