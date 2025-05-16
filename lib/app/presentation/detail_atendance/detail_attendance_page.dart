@@ -25,7 +25,7 @@ class DetailAttendancePage
                 expandedInsets: EdgeInsets.symmetric(horizontal: 1),
                 label: Text('Month'),
                 dropdownMenuEntries: notifier.monthListDropdown,
-                initialSelection: 1,
+                initialSelection:  notifier.monthListDropdown,
                 controller: notifier.monthController,
               )),
               Expanded(child: DropdownMenu(
