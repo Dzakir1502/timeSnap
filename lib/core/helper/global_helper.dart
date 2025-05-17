@@ -18,6 +18,26 @@ enum AppTextStyle {
   BODY_SMALL,
 }
 
+// Tema warna sederhana dengan primary color #0E3C53
+class AppColors {
+  // Main color #0E3C53
+  static const Color primaryColor = Color(0xFF0E3C53);
+  
+  // Variasi warna primary yang mungkin dibutuhkan
+  static const Color primaryLight = Color(0xFF1A5B80);
+  static const Color primaryDark = Color(0xFF092A3A);
+  
+  // Beberapa warna pendukung yang umum digunakan
+  static const Color accentColor = Color(0xFFF0A500);   // Gold accent
+  static const Color errorColor = Color(0xFFD32F2F);    // Red
+  static const Color successColor = Color(0xFF388E3C);  // Green
+  static const Color warningColor = Color(0xFFF57C00);  // Orange
+  
+  // Warna background dan text
+  static const Color backgroundColor = Color(0xFFF5F5F5);
+  static const Color textColor = Color(0xFF212121);
+}
+
 class GlobalHelper {
   static TextStyle? getTextStyle(
     BuildContext context, {
@@ -49,3 +69,30 @@ class GlobalHelper {
     return Theme.of(context).colorScheme;
   }
 }
+
+// Contoh penggunaan di main.dart:
+/*
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      theme: ThemeData(
+        primaryColor: AppColors.primaryColor,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primaryColor,
+          primary: AppColors.primaryColor,
+        ),
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: AppColors.backgroundColor,
+        useMaterial3: true,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+*/

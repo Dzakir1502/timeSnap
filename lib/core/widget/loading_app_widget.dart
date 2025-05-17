@@ -7,10 +7,14 @@ class LoadingAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 100,
-        width: 100,
+        height: 80,
+        width: 80,
         
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0E3C53)),
+          strokeWidth: 20,
+          
+        ),
       ),
     );
   }

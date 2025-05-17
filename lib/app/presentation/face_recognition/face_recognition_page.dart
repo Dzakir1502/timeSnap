@@ -18,9 +18,32 @@ class FaceRecognitionPage
   }
 
   @override
-  AppBar? appBarBuild(BuildContext context) {
-    return AppBar(title: Text('Face validation'));
-  }
+   AppBar? appBarBuild(BuildContext context) {
+  return AppBar(
+    backgroundColor: const Color(0xFF0E3C53),
+    elevation: 0,
+    leading: IconButton(
+      icon: const Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+    title:  Text(
+      'Face Validation',
+      style:GlobalHelper.getTextStyle(
+          context,
+          appTextStyle: AppTextStyle.TITLE_LARGE,
+        )?.copyWith(
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    centerTitle: false,
+  );
+}
 
   @override
   Widget bodyBuild(BuildContext context) {
@@ -63,7 +86,11 @@ class FaceRecognitionPage
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 25,),
-            FilledButton(
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+              ),
               onPressed: _onPressOpenCamera,
               child: Text("Open Camera"),
             ),

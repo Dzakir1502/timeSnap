@@ -5,7 +5,7 @@ import 'package:timesnap/core/helper/shared_preferences_helper.dart';
 
 class ErrorAppWidget extends StatelessWidget {
   final String description;
-  final FilledButton? alternativeButton;
+  final ElevatedButton? alternativeButton;
   final void Function() onPressDefaultButton;
   const ErrorAppWidget({
     super.key,
@@ -38,7 +38,11 @@ class ErrorAppWidget extends StatelessWidget {
           alternativeButton ??
               ((description.contains('401') ||
                       description.toLowerCase().contains('unauthenticated'))
-                  ? FilledButton(
+                  ? ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                        foregroundColor: Colors.white,
+                    ),
                     onPressed: () async {
                       await SharedPreferencesHelper.logout();
                       Navigator.pushAndRemoveUntil(

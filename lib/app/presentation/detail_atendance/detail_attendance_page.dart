@@ -9,9 +9,32 @@ import 'package:timesnap/core/widget/app_widget.dart';
 class DetailAttendancePage
     extends AppWidget<DetailAttendanceNotifier, void, void> {
   @override
-  AppBar? appBarBuild(BuildContext context) {
-    return AppBar(title: Text('Detail Attendance'));
-  }
+ AppBar? appBarBuild(BuildContext context) {
+  return AppBar(
+    backgroundColor: const Color(0xFF0E3C53),
+    elevation: 0,
+    leading: IconButton(
+      icon: const Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+    title:  Text(
+      'Detail Attendance',
+      style:GlobalHelper.getTextStyle(
+          context,
+          appTextStyle: AppTextStyle.TITLE_LARGE,
+        )?.copyWith(
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    centerTitle: false,
+  );
+}
 
   @override
   Widget bodyBuild(BuildContext context) {
@@ -32,7 +55,7 @@ class DetailAttendancePage
                 expandedInsets: EdgeInsets.symmetric(horizontal: 1),
                 label: Text('Year'),
                 dropdownMenuEntries: notifier.yearListDropdown,
-                initialSelection: 2025,
+                initialSelection: notifier.yearListDropdown,
                 controller: notifier.yearController,
               )),
               IconButton(onPressed: _onPressSearch, icon: Icon(Icons.search))
@@ -41,7 +64,7 @@ class DetailAttendancePage
                   SizedBox(height: 5),
           Container(
             height: 1,
-            color: GlobalHelper.getColorScheme(context).primary,
+            color: AppColors.primaryColor,
           ),
           SizedBox(height: 2),
           Row(
@@ -87,7 +110,7 @@ class DetailAttendancePage
           SizedBox(height: 2),
           Container(
             height: 2,
-            color: GlobalHelper.getColorScheme(context).primary,
+            color: AppColors.primaryColor,
           ),
           ListView.separated(
             physics: NeverScrollableScrollPhysics(),
@@ -121,7 +144,7 @@ class DetailAttendancePage
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: GlobalHelper.getColorScheme(context).primary,
+                color: AppColors.primaryColor,
               ),
               child: Text(
                 DateTimeHelper.formatDateTimeFromString(

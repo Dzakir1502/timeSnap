@@ -9,9 +9,32 @@ import 'package:timesnap/core/widget/app_widget.dart';
 
 class LeavePage extends AppWidget<LeaveNotifier, void, void> {
   @override
-  AppBar? appBarBuild(BuildContext context) {
-    return AppBar(title: Text('Leave'));
-  }
+ AppBar? appBarBuild(BuildContext context) {
+  return AppBar(
+    backgroundColor: const Color(0xFF0E3C53),
+    elevation: 0,
+    leading: IconButton(
+      icon: const Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+    title:  Text(
+      'Leave Page',
+      style:GlobalHelper.getTextStyle(
+          context,
+          appTextStyle: AppTextStyle.TITLE_LARGE,
+        )?.copyWith(
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    centerTitle: false,
+  );
+}
 
   @override
   Widget bodyBuild(BuildContext context) {
@@ -67,8 +90,13 @@ class LeavePage extends AppWidget<LeaveNotifier, void, void> {
             ),
             SizedBox(height: 30),
             Container(
+              
               width: double.maxFinite,
-              child: FilledButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryColor,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: () => _onPressSend(context),
                 child: Text('Send'),
               ),

@@ -13,9 +13,9 @@ abstract class AppWidget<T extends AppProvider, P1, P2>
   late T notifier;
   final P1? param1;
   final P2? param2;
-  FilledButton? _alternatifErrorButton;
+  ElevatedButton? _alternatifErrorButton;
 
-  set alternatifErrorButton(FilledButton? param)=>
+  set alternatifErrorButton(ElevatedButton? param)=>
     _alternatifErrorButton = param;
   
 
