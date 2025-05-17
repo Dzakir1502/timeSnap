@@ -282,7 +282,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 appTextStyle: AppTextStyle.TITLE_LARGE,
               )?.copyWith(
             color: Colors.black87,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.bold,
             fontSize: 25,
           ),
         ),
@@ -293,6 +293,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                 appTextStyle: AppTextStyle.TITLE_LARGE,
               )?.copyWith(
             color: Colors.grey[600],
+            fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
         ),
@@ -450,22 +451,7 @@ Widget _activityItem(BuildContext context, AttendanceEntity item) {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      (notifier.schedule?.isWfa ?? false) ? 'WFA' : 'WFO',
-                      style:  GlobalHelper.getTextStyle(
-                        context,
-                        appTextStyle: AppTextStyle.BODY_SMALL,
-                      )?.copyWith(fontSize: 12,
-                        
-                        fontWeight: FontWeight.w500,
-                      )
-                    ),
-                  ),
+                  
                 ],
               ),
               SizedBox(height: 4),

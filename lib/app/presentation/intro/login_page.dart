@@ -74,7 +74,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       )?.copyWith(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFF0E3C53),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -86,7 +86,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       )?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xFF0E3C53),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                     TextField(
@@ -123,7 +123,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       )?.copyWith(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: const Color(0xFF0E3C53),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                     TextField(
@@ -166,7 +166,7 @@ class LoginPage extends AppWidget<LoginNotifier, void, void> {
                       child: FilledButton(
                         onPressed: () => _onPressLogin(context),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0E3C53),
+                          backgroundColor: AppColors.primaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -347,7 +347,7 @@ class CurvedBackgroundPainter extends CustomPainter {
 //                       )?.copyWith(
 //                         fontSize: 26,
 //                         fontWeight: FontWeight.bold,
-//                         color:const Color(0xFF0E3C53),
+//                         color:AppColors.primaryColor,
 //                       ),
 
 //                       ),
@@ -361,7 +361,7 @@ class CurvedBackgroundPainter extends CustomPainter {
 //                       )?.copyWith(
 //                           fontSize: 14,
 //                           fontWeight: FontWeight.w500,
-//                           color: const Color(0xFF0E3C53),
+//                           color: AppColors.primaryColor,
 //                       ),
 
 //                       ),
@@ -405,7 +405,7 @@ class CurvedBackgroundPainter extends CustomPainter {
 //                         )?.copyWith(
 //                             fontSize: 14,
 //                           fontWeight: FontWeight.w500,
-//                           color: const Color(0xFF0E3C53),
+//                           color: AppColors.primaryColor,
 //                         ),
 
 //                       ),
@@ -464,7 +464,7 @@ class CurvedBackgroundPainter extends CustomPainter {
 //                             print("Password: ${_passwordController.text}");
 //                           },
 //                           style: ElevatedButton.styleFrom(
-//                             backgroundColor: const Color(0xFF0E3C53),
+//                             backgroundColor: AppColors.primaryColor,
 //                             shape: RoundedRectangleBorder(
 //                               borderRadius: BorderRadius.circular(10),
 //                             ),

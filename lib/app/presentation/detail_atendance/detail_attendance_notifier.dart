@@ -6,6 +6,7 @@ import 'package:timesnap/core/provider/app_provider.dart';
 
 class DetailAttendanceNotifier extends AppProvider{
   final AttendanceGetByMonthYear _attendanceGetByMonthYear;
+  
 
   DetailAttendanceNotifier(this._attendanceGetByMonthYear){
     init();
@@ -71,4 +72,6 @@ class DetailAttendanceNotifier extends AppProvider{
 
       hideLoading();
   }
+
+
 }

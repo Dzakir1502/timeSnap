@@ -2,6 +2,8 @@ import 'package:timesnap/app/presentation/intro/login_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:timesnap/core/helper/global_helper.dart';
+
 
 
 class SplashScreen extends StatefulWidget {
@@ -53,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0E3C53), // Dark blue color like in the image
+      backgroundColor: AppColors.primaryColor, // Dark blue color like in the image
       body: Center(
         child: FadeTransition(
           opacity: _fadeAnimation,

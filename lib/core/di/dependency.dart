@@ -89,7 +89,7 @@ Future<void> initDependency() async {
     (param1, param2) => MapNotifier(sl(), sl()),
   );
   sl.registerFactoryParam<DetailAttendanceNotifier, void, void>(
-    (param1, param2) => DetailAttendanceNotifier(sl()),
+    (param1, param2) => DetailAttendanceNotifier(sl(),),
   );
   sl.registerFactoryParam<FaceRecognitionNotifier, void, void>(
     (param1, param2) => FaceRecognitionNotifier(sl()),

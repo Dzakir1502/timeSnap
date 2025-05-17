@@ -20,7 +20,7 @@ class FaceRecognitionPage
   @override
    AppBar? appBarBuild(BuildContext context) {
   return AppBar(
-    backgroundColor: const Color(0xFF0E3C53),
+    backgroundColor: AppColors.primaryColor,
     elevation: 0,
     leading: IconButton(
       icon: const Icon(
