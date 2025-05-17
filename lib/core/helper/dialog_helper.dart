@@ -91,10 +91,10 @@ class DialogHelper {
     },
   );
 
-  Future.delayed(Duration(seconds: 2), () {
-    Navigator.of(context).pop(); // close dialog
-    Navigator.of(context).pop(); // kembali ke halaman sebelumnya
-  });
-}
+    Future.delayed(Duration(seconds: 2), () {
+      Navigator.of(context).pop(); // close dialog
+      Navigator.of(context).pop(); // kembali ke halaman sebelumnya
+    });
+  }
 
 }

@@ -245,7 +245,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
                   ),
                 ),
                 child: Text(
-                  'Check-In',
+                  'Create Attendance',
                   style: GlobalHelper.getTextStyle(
                     context,
                     appTextStyle: AppTextStyle.BODY_MEDIUM,
@@ -270,7 +270,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
           ),
           child: Icon(
             icon,
-            color: Colors.grey[400],
+            color: const Color.fromARGB(255, 0, 0, 0),
             size: 24,
           ),
         ),
@@ -309,7 +309,7 @@ Widget _activityThisMonth(BuildContext context) {
     margin: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     padding: EdgeInsets.all(16),
     constraints: BoxConstraints(
-      minHeight: screenHeight - kToolbarHeight - 200, // Reduced min height to avoid overflow
+      minHeight: screenHeight - kToolbarHeight - 200, 
     ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
