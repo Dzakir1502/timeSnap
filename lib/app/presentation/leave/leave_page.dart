@@ -37,75 +37,139 @@ class LeavePage extends AppWidget<LeaveNotifier, void, void> {
 }
 
   @override
-  Widget bodyBuild(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
+Widget bodyBuild(BuildContext context) {
+  return SafeArea(
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
+              style:  GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ),
               controller: notifier.startDateController,
               onTap: () => _onPressDate(context, notifier.startDateController),
               readOnly: true,
               decoration: InputDecoration(
-                label: Text(
-                  'Start Date',
-                  style: GlobalHelper.getTextStyle(
-                    context,
-                    appTextStyle: AppTextStyle.BODY_MEDIUM,
-                  ),
+                labelText: 'Start Date',
+                labelStyle:  GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ),
+                fillColor: Color(0xFFF5F7FA),
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(4),
                 ),
-                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 16),
             TextField(
+              style: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ), 
               controller: notifier.endDateController,
               onTap: () => _onPressDate(context, notifier.endDateController),
               readOnly: true,
               decoration: InputDecoration(
-                label: Text(
-                  'End Date',
-                  style: GlobalHelper.getTextStyle(
-                    context,
-                    appTextStyle: AppTextStyle.BODY_MEDIUM,
-                  ),
+                labelStyle: GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ),
+                labelText: 'End Date',
+                fillColor: Color(0xFFF5F7FA),
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(4),
                 ),
-                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 16),
             TextField(
+              style:  GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ),
               controller: notifier.reasonController,
+              maxLines: 3,
               decoration: InputDecoration(
-                label: Text(
-                  'Reason',
-                  style: GlobalHelper.getTextStyle(
-                    context,
-                    appTextStyle: AppTextStyle.BODY_MEDIUM,
-                  ),
+                labelStyle:  GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        fontSize: 14,
+                        ),
+                labelText: 'Reason',
+                fillColor: Color(0xFFF5F7FA),
+                filled: true,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(4),
                 ),
-                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 24),
             Container(
-              
-              width: double.maxFinite,
+              width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,
                   foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
                 onPressed: () => _onPressSend(context),
-                child: Text('Send'),
+                child: Text(
+                  'Send',
+                  style:  GlobalHelper.getTextStyle(
+                        context,
+                        appTextStyle: AppTextStyle.BODY_SMALL,
+                      )?.copyWith(             
+                        color: AppColors.backgroundColor,
+                        fontSize: 14,
+                        ),
+                ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   void checkVariableAfterUi(BuildContext context) {

@@ -277,7 +277,7 @@ class HomePage extends AppWidget<HomeNotifier, void, void> {
         SizedBox(height: 8),
         Text(
           time,
-          style:GlobalHelper.getTextStyle(
+          style: GlobalHelper.getTextStyle(
                 context,
                 appTextStyle: AppTextStyle.TITLE_LARGE,
               )?.copyWith(
@@ -476,9 +476,7 @@ Widget _activityItem(BuildContext context, AttendanceEntity item) {
                     style: GlobalHelper.getTextStyle(
                         context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
-                      )?.copyWith(                     
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                      )?.copyWith(                
                         fontSize: 14,
                         ), 
                   ),
@@ -500,9 +498,7 @@ Widget _activityItem(BuildContext context, AttendanceEntity item) {
                     style:  GlobalHelper.getTextStyle(
                         context,
                         appTextStyle: AppTextStyle.BODY_SMALL,
-                      )?.copyWith(                     
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                      )?.copyWith(                
                         fontSize: 14,
                         ),
                   ),
