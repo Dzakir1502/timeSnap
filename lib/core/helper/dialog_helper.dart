@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timesnap/core/helper/global_helper.dart';
 
 class DialogHelper {
   static showSnackBar({required BuildContext context, required String text}) {
@@ -44,4 +45,56 @@ class DialogHelper {
       },
     );
   }
+
+  static showSuccessDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Color(0xFFF0FAFF), // latar card (biru muda seperti contoh)
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color(0xFF0D3B66), // warna icon background (biru tua)
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.check,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+               Text(
+                "Your request has\nbeen successfully\nsubmitted!",
+                textAlign: TextAlign.center,
+                style:GlobalHelper.getTextStyle(context, appTextStyle: AppTextStyle.LABEL_MEDIUM)?.copyWith(
+                  fontSize: 16,
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+
+  Future.delayed(Duration(seconds: 2), () {
+    Navigator.of(context).pop(); // close dialog
+    Navigator.of(context).pop(); // kembali ke halaman sebelumnya
+  });
+}
+
 }
