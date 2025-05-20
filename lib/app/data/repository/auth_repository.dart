@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timesnap/app/data/model/auth.dart';
 import 'package:timesnap/app/data/source/auth_api_service.dart';
 import 'package:timesnap/app/module/entity/auth.dart';

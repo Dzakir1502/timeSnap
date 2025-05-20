@@ -14,8 +14,11 @@ abstract class LeaveApiService {
     return _LeaveApiService(dio);
   }
 
-  @POST('/api/leaves')
+  @POST('/api/leaves-request')
   Future<HttpResponse<DataState>> send({
     @Body() required Map<String, dynamic> body,
   });
+
+  @GET('/api/leaves')
+  Future<HttpResponse<DataState>> get();
 }

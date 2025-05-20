@@ -1,4 +1,4 @@
-const String BASE_URL = 'https://presensi.dewakoding.com';
+const String BASE_URL = 'https://dzakkir.my.id';
 
 const String PREF_AUTH = 'pref-auth';
 const String PREF_ID = 'pref-id';

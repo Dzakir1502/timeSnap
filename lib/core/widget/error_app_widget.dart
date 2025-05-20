@@ -53,16 +53,14 @@ class ErrorAppWidget extends StatelessWidget {
                     },
                     child: Text('Logout'),
                   )
-                  : FilledButton.icon(
+                  : ElevatedButton(
                     onPressed: onPressDefaultButton,
-                    icon: Icon(Icons.refresh),
-                    label: Text(
-                      "Refresh",
-                      style: GlobalHelper.getTextStyle(
-                        context,
-                        appTextStyle: AppTextStyle.BODY_LARGE,
-                      )?.copyWith(color: Colors.white),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                        foregroundColor: Colors.white,
                     ),
+                    child: Text('Refresh'),
+                    
                   )),
         ],
       ),
